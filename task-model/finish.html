@@ -1,0 +1,243 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Putting it all together - </title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <base href="../">
+
+        <link rel="stylesheet" href="book.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <link rel="shortcut icon" href="favicon.png">
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme -->
+        
+
+        
+
+        <!-- Fetch Clipboard.js from CDN but have a local fallback -->
+        <script src="https://cdn.jsdelivr.net/clipboard.js/1.6.1/clipboard.min.js"></script>
+        <script>
+            if (typeof Clipboard == 'undefined') {
+                document.write(unescape("%3Cscript src='clipboard.min.js'%3E%3C/script%3E"));
+            }
+        </script>
+
+        <!-- Fetch JQuery from CDN but have a local fallback -->
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script>
+            if (typeof jQuery == 'undefined') {
+                document.write(unescape("%3Cscript src='jquery.js'%3E%3C/script%3E"));
+            }
+        </script>
+
+        <!-- Fetch store.js from local - TODO add CDN when 2.x.x is available on cdnjs -->
+        <script src="store.js"></script>
+
+        <!-- Custom JS script -->
+        
+
+    </head>
+    <body class="light">
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme = store.get('theme');
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            $('body').removeClass().addClass(theme);
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var sidebar = store.get('sidebar');
+            if (sidebar === "hidden") { $("html").addClass("sidebar-hidden") }
+            else if (sidebar === "visible") { $("html").addClass("sidebar-visible") }
+        </script>
+
+        <div id="sidebar" class="sidebar">
+            <ul class="chapter"><li class="affix"><a href="async-in-rust/chapter.html">Async in Rust: what you need to know</a></li><li><strong>1.</strong> A crash course</li><li><ul class="section"><li><strong>1.1.</strong> Hello, world!</li><li><strong>1.2.</strong> Serving files</li><li><strong>1.3.</strong> Adding caching</li><li><strong>1.4.</strong> Adding streaming</li></ul></li><li><a href="task-model/chapter.html"><strong>2.</strong> Tasks and executors</a></li><li><ul class="section"><li><a href="task-model/intro.html"><strong>2.1.</strong> Background: sync vs. async</a></li><li><a href="task-model/tasks.html"><strong>2.2.</strong> Taming async with tasks</a></li><li><a href="task-model/exec.html"><strong>2.3.</strong> A toy task executor</a></li><li><a href="task-model/events.html"><strong>2.4.</strong> A toy event loop</a></li><li><a href="task-model/finish.html" class="active"><strong>2.5.</strong> Putting it all together</a></li><li><a href="task-model/real/section.html"><strong>2.6.</strong> The real task system</a></li><li><ul class="section"><li><a href="task-model/real/tasks.html"><strong>2.6.1.</strong> Tasks</a></li><li><a href="task-model/real/exec.html"><strong>2.6.2.</strong> Executors</a></li><li><a href="task-model/real/events.html"><strong>2.6.3.</strong> Event loops</a></li></ul></li></ul></li><li><a href="tokio/chapter.html"><strong>3.</strong> Asynchronous I/O</a></li><li><ul class="section"><li><a href="tokio/socket.html"><strong>3.1.</strong> Acquiring a socket</a></li><li><a href="tokio/io.html"><strong>3.2.</strong> Reading and writing</a></li><li><strong>3.3.</strong> Transforming at the byte level</li><li><a href="tokio/shutdown.html"><strong>3.4.</strong> Closing down a connection</a></li></ul></li><li><strong>4.</strong> Case study: a chat server</li><li><a href="futures/chapter.html"><strong>5.</strong> Futures</a></li><li><ul class="section"><li><a href="futures/def.html"><strong>5.1.</strong> The core definition</a></li><li><a href="futures/read-exact.html"><strong>5.2.</strong> Example: <code>ReadExact</code></a></li><li><strong>5.3.</strong> Example: a timeout wrapper</li><li><strong>5.4.</strong> Push and pull: futures and tasks</li><li><strong>5.5.</strong> The combinators</li><li><strong>5.6.</strong> Cancellation</li><li><strong>5.7.</strong> Relating sync and async code</li><li><strong>5.8.</strong> Example: an RPC client</li></ul></li><li><strong>6.</strong> Streams</li><li><ul class="section"><li><strong>6.1.</strong> The core definition</li><li><strong>6.2.</strong> The combinators</li><li><strong>6.3.</strong> Example: a stream of lines</li></ul></li><li><strong>7.</strong> Sinks</li><li><ul class="section"><li><strong>7.1.</strong> The core definition</li><li><strong>7.2.</strong> The combinators</li><li><strong>7.3.</strong> Example: write buffering</li></ul></li><li><strong>8.</strong> Case study: a chat server</li><li><strong>9.</strong> Transports</li><li><ul class="section"><li><strong>9.1.</strong> Framing</li><li><strong>9.2.</strong> Decoding</li><li><strong>9.3.</strong> Encoding</li><li><strong>9.4.</strong> Example: an http server</li><li><strong>9.5.</strong> Length-delimited framing</li><li><strong>9.6.</strong> Transport layers</li></ul></li><li><strong>10.</strong> Async in practice</li><li><ul class="section"><li><strong>10.1.</strong> Effective programming with futures</li><li><ul class="section"><li><strong>10.1.1.</strong> Multithreading</li><li><strong>10.1.2.</strong> When to use combinators</li><li><strong>10.1.3.</strong> Example: a Github API client</li><li><strong>10.1.4.</strong> Buffering and <code>bytes</code></li></ul></li><li><strong>10.2.</strong> Organizing your code</li><li><ul class="section"><li><strong>10.2.1.</strong> Library guidelines</li><li><strong>10.2.2.</strong> Resource management</li><li><strong>10.2.3.</strong> Structuring tasks</li><li><strong>10.2.4.</strong> Graceful shutdown</li><li><strong>10.2.5.</strong> Backpressure</li></ul></li></ul></li><li><strong>11.</strong> Batteries included</li><li><ul class="section"><li><strong>11.1.</strong> Networking</li><li><ul class="section"><li><strong>11.1.1.</strong> HTTP</li><li><strong>11.1.2.</strong> DNS</li><li><strong>11.1.3.</strong> TLS</li><li><strong>11.1.4.</strong> Websockets</li><li><strong>11.1.5.</strong> Gzip</li><li><strong>11.1.6.</strong> UDP</li></ul></li><li><strong>11.2.</strong> Services</li><li><ul class="section"><li><strong>11.2.1.</strong> Databases</li><li><strong>11.2.2.</strong> Timers</li><li><strong>11.2.3.</strong> File I/O</li><li><strong>11.2.4.</strong> Processes</li><li><strong>11.2.5.</strong> Named piped</li><li><strong>11.2.6.</strong> Signals</li><li><strong>11.2.7.</strong> inotify</li></ul></li></ul></li><li><strong>12.</strong> Advanced topics</li><li><ul class="section"><li><strong>12.1.</strong> Managing the Tokio event loop</li><li><strong>12.2.</strong> Building a custom executor</li></ul></li><li><strong>13.</strong> FAQ</li><li><ul class="section"><li><strong>13.1.</strong> Comparisons to other languages</li><li><strong>13.2.</strong> Rationale for the &quot;pull&quot; model</li></ul></li></ul>
+        </div>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page" tabindex="-1">
+                <div id="menu-bar" class="menu-bar">
+                    <div class="left-buttons">
+                        <i id="sidebar-toggle" class="fa fa-bars"></i>
+                        <i id="theme-toggle" class="fa fa-paint-brush"></i>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <i id="print-button" class="fa fa-print" title="Print this book"></i>
+                    </div>
+                </div>
+
+                <div id="content" class="content">
+                    <a class="header" href="task-model/finish.html#putting-it-all-together" id="putting-it-all-together"><h1>Putting it all together</h1></a>
+<p>At this point, we've built a simple executor for running many tasks on a single
+thread, and a simple event loop for dispatching timer events, again from a
+single thread. Now let's plug them together to build an app that can support an
+arbitrary number of tasks periodically &quot;dinging&quot;, using only two OS threads.</p>
+<p>To do this, we'll create a task called <code>Periodic</code>:</p>
+<pre><pre class="playpen"><code class="language-rust no_run">
+# #![allow(unused_variables)]
+#fn main() {
+struct Periodic {
+    // a name for this task
+    id: u64,
+
+    // how often to &quot;ding&quot;
+    period: Duration,
+
+    // when the next &quot;ding&quot; is scheduled
+    next: Instant,
+
+    // a handle back to the timer event loop
+    timer: Timer,
+}
+
+impl Periodic {
+    fn new(id: u64, period: Duration, timer: Timer) -&gt; Periodic {
+        Periodic {
+            id, period, timer, next: Instant::now() + period
+        }
+    }
+}
+#}</code></pre></pre>
+<p>The <code>period</code> field says how often the task should print a &quot;ding&quot; message. The
+implementation is very straightforward; note that the task is intended to run
+forever, continuously printing a message after each <code>period</code> has elapsed:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+impl Task for Periodic {
+    fn poll(&amp;mut self, wake: &amp;Waker) -&gt; Async&lt;()&gt; {
+        // are we ready to ding yet?
+        let now = Instant::now();
+        if now &gt;= self.next {
+            self.next = now + self.period;
+            println!(&quot;Task {} - ding&quot;, self.id);
+        }
+
+        // make sure we're registered to wake up at the next expected `ding`
+        self.timer.register(self.next, wake);
+        Async::Pending
+    }
+}
+#}</code></pre></pre>
+<p>And now, we hook it all together:</p>
+<pre><pre class="playpen"><code class="language-rust no_run">fn main() {
+    let timer = ToyTimer::new();
+    let exec = ToyExec::new();
+
+    for i in 1..10 {
+        exec.spawn(Periodic::new(i, Duration::from_millis(i * 500), timer.clone()));
+    }
+
+    exec.run()
+}
+</code></pre></pre>
+<p>The program generates output like:</p>
+<pre><code>Task 1 - ding
+Task 2 - ding
+Task 1 - ding
+Task 3 - ding
+Task 1 - ding
+Task 4 - ding
+Task 2 - ding
+Task 1 - ding
+Task 5 - ding
+Task 1 - ding
+Task 6 - ding
+Task 2 - ding
+Task 3 - ding
+Task 1 - ding
+Task 7 - ding
+Task 1 - ding
+...
+</code></pre>
+<p>Stepping back, what we've done here is a bit magical: the implementation of
+<code>Task</code> for <code>Periodic</code> is written in a pretty straightforward way that says how a
+<em>single task</em> should behave. But then we can interleave any number of such
+tasks, using only two OS threads total! That's the power of asynchrony.</p>
+<a class="header" href="task-model/finish.html#exercise-multi-enrollment" id="exercise-multi-enrollment"><h2>Exercise: multi-enrollment</h2></a>
+<p>The timer event loop contains an unfortunate explicit panic: &quot;Attempted to add
+to registrations for the same instant&quot;.</p>
+<ul>
+<li>Is it possible to encounter this panic in the above program?</li>
+<li>What would happen if we simply removed the panic?</li>
+<li>How can the code be improved to avoid this issue altogether?</li>
+</ul>
+<a class="header" href="task-model/finish.html#exercise-winding-down" id="exercise-winding-down"><h2>Exercise: winding down</h2></a>
+<p>Both the <code>Periodic</code> task and the <code>SingleThreadedExec</code> are designed to run
+without ever stopping.</p>
+<ul>
+<li>Modify <code>Periodic</code> so that each instance is set to ding only a fixed number of
+times, and then the task is shut down.</li>
+<li>Modify <code>SingleThreadedExec</code> to stop running when there are no more tasks.</li>
+<li>Test your solution!</li>
+</ul>
+
+                </div>
+
+                <!-- Mobile navigation buttons -->
+                
+                    <a rel="prev" href="task-model/events.html" class="mobile-nav-chapters previous">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="task-model/real/section.html" class="mobile-nav-chapters next">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+
+            </div>
+
+            
+                <a href="task-model/events.html" class="nav-chapters previous" title="You can navigate through the chapters using the arrow keys">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+            
+
+            
+                <a href="task-model/real/section.html" class="nav-chapters next" title="You can navigate through the chapters using the arrow keys">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            
+
+        </div>
+
+
+        <!-- Local fallback for Font Awesome -->
+        <script>
+            if ($(".fa").css("font-family") !== "FontAwesome") {
+                $('<link rel="stylesheet" type="text/css" href="_FontAwesome/css/font-awesome.css">').prependTo('head');
+            }
+        </script>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        
+
+        
+
+        
+
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+    </body>
+</html>

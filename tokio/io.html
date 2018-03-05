@@ -1,0 +1,285 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Reading and writing - </title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <base href="../">
+
+        <link rel="stylesheet" href="book.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <link rel="shortcut icon" href="favicon.png">
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme -->
+        
+
+        
+
+        <!-- Fetch Clipboard.js from CDN but have a local fallback -->
+        <script src="https://cdn.jsdelivr.net/clipboard.js/1.6.1/clipboard.min.js"></script>
+        <script>
+            if (typeof Clipboard == 'undefined') {
+                document.write(unescape("%3Cscript src='clipboard.min.js'%3E%3C/script%3E"));
+            }
+        </script>
+
+        <!-- Fetch JQuery from CDN but have a local fallback -->
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script>
+            if (typeof jQuery == 'undefined') {
+                document.write(unescape("%3Cscript src='jquery.js'%3E%3C/script%3E"));
+            }
+        </script>
+
+        <!-- Fetch store.js from local - TODO add CDN when 2.x.x is available on cdnjs -->
+        <script src="store.js"></script>
+
+        <!-- Custom JS script -->
+        
+
+    </head>
+    <body class="light">
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme = store.get('theme');
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            $('body').removeClass().addClass(theme);
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var sidebar = store.get('sidebar');
+            if (sidebar === "hidden") { $("html").addClass("sidebar-hidden") }
+            else if (sidebar === "visible") { $("html").addClass("sidebar-visible") }
+        </script>
+
+        <div id="sidebar" class="sidebar">
+            <ul class="chapter"><li class="affix"><a href="async-in-rust/chapter.html">Async in Rust: what you need to know</a></li><li><strong>1.</strong> A crash course</li><li><ul class="section"><li><strong>1.1.</strong> Hello, world!</li><li><strong>1.2.</strong> Serving files</li><li><strong>1.3.</strong> Adding caching</li><li><strong>1.4.</strong> Adding streaming</li></ul></li><li><a href="task-model/chapter.html"><strong>2.</strong> Tasks and executors</a></li><li><ul class="section"><li><a href="task-model/intro.html"><strong>2.1.</strong> Background: sync vs. async</a></li><li><a href="task-model/tasks.html"><strong>2.2.</strong> Taming async with tasks</a></li><li><a href="task-model/exec.html"><strong>2.3.</strong> A toy task executor</a></li><li><a href="task-model/events.html"><strong>2.4.</strong> A toy event loop</a></li><li><a href="task-model/finish.html"><strong>2.5.</strong> Putting it all together</a></li><li><a href="task-model/real/section.html"><strong>2.6.</strong> The real task system</a></li><li><ul class="section"><li><a href="task-model/real/tasks.html"><strong>2.6.1.</strong> Tasks</a></li><li><a href="task-model/real/exec.html"><strong>2.6.2.</strong> Executors</a></li><li><a href="task-model/real/events.html"><strong>2.6.3.</strong> Event loops</a></li></ul></li></ul></li><li><a href="tokio/chapter.html"><strong>3.</strong> Asynchronous I/O</a></li><li><ul class="section"><li><a href="tokio/socket.html"><strong>3.1.</strong> Acquiring a socket</a></li><li><a href="tokio/io.html" class="active"><strong>3.2.</strong> Reading and writing</a></li><li><strong>3.3.</strong> Transforming at the byte level</li><li><a href="tokio/shutdown.html"><strong>3.4.</strong> Closing down a connection</a></li></ul></li><li><strong>4.</strong> Case study: a chat server</li><li><a href="futures/chapter.html"><strong>5.</strong> Futures</a></li><li><ul class="section"><li><a href="futures/def.html"><strong>5.1.</strong> The core definition</a></li><li><a href="futures/read-exact.html"><strong>5.2.</strong> Example: <code>ReadExact</code></a></li><li><strong>5.3.</strong> Example: a timeout wrapper</li><li><strong>5.4.</strong> Push and pull: futures and tasks</li><li><strong>5.5.</strong> The combinators</li><li><strong>5.6.</strong> Cancellation</li><li><strong>5.7.</strong> Relating sync and async code</li><li><strong>5.8.</strong> Example: an RPC client</li></ul></li><li><strong>6.</strong> Streams</li><li><ul class="section"><li><strong>6.1.</strong> The core definition</li><li><strong>6.2.</strong> The combinators</li><li><strong>6.3.</strong> Example: a stream of lines</li></ul></li><li><strong>7.</strong> Sinks</li><li><ul class="section"><li><strong>7.1.</strong> The core definition</li><li><strong>7.2.</strong> The combinators</li><li><strong>7.3.</strong> Example: write buffering</li></ul></li><li><strong>8.</strong> Case study: a chat server</li><li><strong>9.</strong> Transports</li><li><ul class="section"><li><strong>9.1.</strong> Framing</li><li><strong>9.2.</strong> Decoding</li><li><strong>9.3.</strong> Encoding</li><li><strong>9.4.</strong> Example: an http server</li><li><strong>9.5.</strong> Length-delimited framing</li><li><strong>9.6.</strong> Transport layers</li></ul></li><li><strong>10.</strong> Async in practice</li><li><ul class="section"><li><strong>10.1.</strong> Effective programming with futures</li><li><ul class="section"><li><strong>10.1.1.</strong> Multithreading</li><li><strong>10.1.2.</strong> When to use combinators</li><li><strong>10.1.3.</strong> Example: a Github API client</li><li><strong>10.1.4.</strong> Buffering and <code>bytes</code></li></ul></li><li><strong>10.2.</strong> Organizing your code</li><li><ul class="section"><li><strong>10.2.1.</strong> Library guidelines</li><li><strong>10.2.2.</strong> Resource management</li><li><strong>10.2.3.</strong> Structuring tasks</li><li><strong>10.2.4.</strong> Graceful shutdown</li><li><strong>10.2.5.</strong> Backpressure</li></ul></li></ul></li><li><strong>11.</strong> Batteries included</li><li><ul class="section"><li><strong>11.1.</strong> Networking</li><li><ul class="section"><li><strong>11.1.1.</strong> HTTP</li><li><strong>11.1.2.</strong> DNS</li><li><strong>11.1.3.</strong> TLS</li><li><strong>11.1.4.</strong> Websockets</li><li><strong>11.1.5.</strong> Gzip</li><li><strong>11.1.6.</strong> UDP</li></ul></li><li><strong>11.2.</strong> Services</li><li><ul class="section"><li><strong>11.2.1.</strong> Databases</li><li><strong>11.2.2.</strong> Timers</li><li><strong>11.2.3.</strong> File I/O</li><li><strong>11.2.4.</strong> Processes</li><li><strong>11.2.5.</strong> Named piped</li><li><strong>11.2.6.</strong> Signals</li><li><strong>11.2.7.</strong> inotify</li></ul></li></ul></li><li><strong>12.</strong> Advanced topics</li><li><ul class="section"><li><strong>12.1.</strong> Managing the Tokio event loop</li><li><strong>12.2.</strong> Building a custom executor</li></ul></li><li><strong>13.</strong> FAQ</li><li><ul class="section"><li><strong>13.1.</strong> Comparisons to other languages</li><li><strong>13.2.</strong> Rationale for the &quot;pull&quot; model</li></ul></li></ul>
+        </div>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page" tabindex="-1">
+                <div id="menu-bar" class="menu-bar">
+                    <div class="left-buttons">
+                        <i id="sidebar-toggle" class="fa fa-bars"></i>
+                        <i id="theme-toggle" class="fa fa-paint-brush"></i>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <i id="print-button" class="fa fa-print" title="Print this book"></i>
+                    </div>
+                </div>
+
+                <div id="content" class="content">
+                    <a class="header" href="tokio/io.html#reading-and-writing" id="reading-and-writing"><h1>Reading and writing</h1></a>
+<p>The <code>futures</code> crate contains an <code>io</code> module, which is the async counterpart to
+<code>std::io</code>. That module defines, in particular, the core primitives for doing
+async reading, writing, and flushing:</p>
+<pre><pre class="playpen"><code class="language-rust no_run">
+# #![allow(unused_variables)]
+#fn main() {
+trait AsyncRead {
+    fn read(&amp;mut self, buf: &amp;mut [u8]) -&gt; AsyncIoResult&lt;usize&gt;;
+}
+
+trait AsyncWrite {
+    fn write(&amp;mut self, buf: &amp;[u8]) -&gt; AsyncIoResult&lt;usize&gt;;
+    fn flush(&amp;mut self) -&gt; AsyncIoResult&lt;()&gt;;
+}
+#}</code></pre></pre>
+<p>These methods work exactly like their counterparts in <code>std</code>, except that if the
+underlying I/O object is not ready to perform the requested action, they return
+<code>Ok(Async::WillWake)</code>, and stash the given <code>wake</code> to be used once I/O is
+ready. Once more, the fact that their result type involves <code>Async</code> is the clear
+signal that they plug into the async task system.</p>
+<a class="header" href="tokio/io.html#example-echoing-input" id="example-echoing-input"><h2>Example: echoing input</h2></a>
+<p>While the <code>AsyncRead</code> and <code>AsyncWrite</code> traits are simple enough, there are some
+significant differences in <em>using</em> them, compared to the synchronous
+versions. Most importantly, async tasks generally have an explicit <em>overall
+state</em> associated with them (which plays the role usually played by the stack in
+synchronous programming). To see this concretely, let's write a task for echoing
+everything sent on a socket. First, the basic setup:</p>
+<pre><pre class="playpen"><code class="language-rust no_run">
+# #![allow(unused_variables)]
+#fn main() {
+use tokio::net::TcpStream;
+
+// The task structure -- echoing on a *single* connection
+struct Echo {
+    // The connection
+    io: TcpStream,
+
+    // Buffered data to be echoed back
+    buf: Vec&lt;u8&gt;,
+
+    // The current state of the &quot;echo state machine&quot;
+    state: EchoState,
+}
+
+enum EchoState {
+    // The next step is reading into `buf`, from the front
+    Reading,
+
+    // The next step is echoing back out `buf`, from the
+    // given start and end points.
+    Writing(usize, usize),
+}
+
+impl Echo {
+    fn new(io: TcpStream) -&gt; Echo {
+        Echo {
+            io,
+            state: EchoState::Reading,
+            buf: vec![0; 4096],
+        }
+    }
+}
+#}</code></pre></pre>
+<p>The idea then is that the <code>Echo</code> task alternates between reading and writing. If
+at any point it is unable to perform that task, it returns <code>Async::WillWake</code>,
+having been enrolled to be woken when the needed I/O is available. Such
+state-machine tasks almost always have an outer <code>loop</code> that continuously moves
+through the states until an obstruction is reached:</p>
+<pre><pre class="playpen"><code class="language-rust no_run">
+# #![allow(unused_variables)]
+#fn main() {
+impl Future for Echo {
+    type Item = ();
+    type Error = io::Error;
+
+    fn complete(&amp;mut self) -&gt; AsyncIoResult&lt;()&gt; {
+        loop {
+            self.state = match self.state {
+                EchoState::Reading =&gt; {
+                    match self.io.read(&amp;mut self.buf)? {
+                        Async::WillWake =&gt; return Ok(Async::WillWake),
+                        Async::Done(len) =&gt; EchoState::Writing(0, len),
+                    }
+                }
+                EchoState::Writing(from, to) if from &gt;= to =&gt; {
+                    EchoState::Reading
+                }
+                EchoState::Writing(from, to) =&gt; {
+                    match self.io.write(&amp;self.buf[from..to])? {
+                        Async::WillWake =&gt; return Ok(Async::WillWake),
+                        Async::Done(n) =&gt; EchoState::Writing(from + n, to),
+                    }
+                }
+            };
+        }
+    }
+}
+#}</code></pre></pre>
+<p>It's important to note that we can freely &quot;bubble up&quot; <code>WillWake</code>, because if a
+function like <code>read</code>, returns it, that function has already <em>guaranteed</em> to wake
+up our task when <code>read</code>ing is possible. In particular, the <code>tokio</code> crate takes
+care of stashing the <code>WakeHandle</code> as necessary whenever we attempt an
+<code>AsyncRead::read</code>, and so on. All we have to do is bubble out the <code>WillWake</code>
+result.</p>
+<p>While the code here is not <em>so</em> complicated, it's a bit noisy for something so
+simple. Much of the rest of this book will cover higher-level abstractions that
+cut down on the noise. For this kind of low-level programming, though, the
+futures crate provides a <code>try_done</code> macro that works much like the <code>?</code> operator,
+except that it <em>also</em> bubbles out <code>Async::WillWake</code>. Using that macro, we can
+rewrite the code as follows:</p>
+<pre><pre class="playpen"><code class="language-rust no_run">
+# #![allow(unused_variables)]
+#fn main() {
+impl Future for Echo {
+    type Item = ();
+    type Error = io::Error;
+
+    fn complete(&amp;mut self) -&gt; AsyncIoResult&lt;()&gt; {
+        loop {
+            self.state = match self.state {
+                EchoState::Reading =&gt; {
+                    let let = try_done!(self.io.read(&amp;mut self.buf));
+                    EchoState::Writing(0, len)
+                }
+                EchoState::Writing(from, to) if from &gt;= to =&gt; {
+                    EchoState::Reading
+                }
+                EchoState::Writing(from, to) =&gt; {
+                    let n = try_done!(self.io.write(&amp;self.buf[from..to]))
+                    EchoState::Writing(from + n, to)
+                }
+            };
+        }
+    }
+}
+#}</code></pre></pre>
+<p>As we'll see in the <a href="futures/_chapter.html">Futures</a> chapter, though, we'll
+ultimately do better than this, by avoid writing a state machine at all.</p>
+<a class="header" href="tokio/io.html#exercises" id="exercises"><h2>Exercises</h2></a>
+<ul>
+<li>What would happen if we did not include the outer <code>loop</code>?</li>
+<li>Use the <code>CurrentThread</code> executor and <code>TcpListener</code> to turn the above code into
+a complete, working server.</li>
+</ul>
+<p>https://gist.github.com/alexcrichton/da80683060f405d6be0e06b426588886</p>
+
+                </div>
+
+                <!-- Mobile navigation buttons -->
+                
+                    <a rel="prev" href="tokio/socket.html" class="mobile-nav-chapters previous">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="tokio/shutdown.html" class="mobile-nav-chapters next">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+
+            </div>
+
+            
+                <a href="tokio/socket.html" class="nav-chapters previous" title="You can navigate through the chapters using the arrow keys">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+            
+
+            
+                <a href="tokio/shutdown.html" class="nav-chapters next" title="You can navigate through the chapters using the arrow keys">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            
+
+        </div>
+
+
+        <!-- Local fallback for Font Awesome -->
+        <script>
+            if ($(".fa").css("font-family") !== "FontAwesome") {
+                $('<link rel="stylesheet" type="text/css" href="_FontAwesome/css/font-awesome.css">').prependTo('head');
+            }
+        </script>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        
+
+        
+
+        
+
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+    </body>
+</html>

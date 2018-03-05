@@ -1,0 +1,229 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Taming async with tasks - </title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <base href="../">
+
+        <link rel="stylesheet" href="book.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <link rel="shortcut icon" href="favicon.png">
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme -->
+        
+
+        
+
+        <!-- Fetch Clipboard.js from CDN but have a local fallback -->
+        <script src="https://cdn.jsdelivr.net/clipboard.js/1.6.1/clipboard.min.js"></script>
+        <script>
+            if (typeof Clipboard == 'undefined') {
+                document.write(unescape("%3Cscript src='clipboard.min.js'%3E%3C/script%3E"));
+            }
+        </script>
+
+        <!-- Fetch JQuery from CDN but have a local fallback -->
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script>
+            if (typeof jQuery == 'undefined') {
+                document.write(unescape("%3Cscript src='jquery.js'%3E%3C/script%3E"));
+            }
+        </script>
+
+        <!-- Fetch store.js from local - TODO add CDN when 2.x.x is available on cdnjs -->
+        <script src="store.js"></script>
+
+        <!-- Custom JS script -->
+        
+
+    </head>
+    <body class="light">
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme = store.get('theme');
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            $('body').removeClass().addClass(theme);
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var sidebar = store.get('sidebar');
+            if (sidebar === "hidden") { $("html").addClass("sidebar-hidden") }
+            else if (sidebar === "visible") { $("html").addClass("sidebar-visible") }
+        </script>
+
+        <div id="sidebar" class="sidebar">
+            <ul class="chapter"><li class="affix"><a href="async-in-rust/chapter.html">Async in Rust: what you need to know</a></li><li><strong>1.</strong> A crash course</li><li><ul class="section"><li><strong>1.1.</strong> Hello, world!</li><li><strong>1.2.</strong> Serving files</li><li><strong>1.3.</strong> Adding caching</li><li><strong>1.4.</strong> Adding streaming</li></ul></li><li><a href="task-model/chapter.html"><strong>2.</strong> Tasks and executors</a></li><li><ul class="section"><li><a href="task-model/intro.html"><strong>2.1.</strong> Background: sync vs. async</a></li><li><a href="task-model/tasks.html" class="active"><strong>2.2.</strong> Taming async with tasks</a></li><li><a href="task-model/exec.html"><strong>2.3.</strong> A toy task executor</a></li><li><a href="task-model/events.html"><strong>2.4.</strong> A toy event loop</a></li><li><a href="task-model/finish.html"><strong>2.5.</strong> Putting it all together</a></li><li><a href="task-model/real/section.html"><strong>2.6.</strong> The real task system</a></li><li><ul class="section"><li><a href="task-model/real/tasks.html"><strong>2.6.1.</strong> Tasks</a></li><li><a href="task-model/real/exec.html"><strong>2.6.2.</strong> Executors</a></li><li><a href="task-model/real/events.html"><strong>2.6.3.</strong> Event loops</a></li></ul></li></ul></li><li><a href="tokio/chapter.html"><strong>3.</strong> Asynchronous I/O</a></li><li><ul class="section"><li><a href="tokio/socket.html"><strong>3.1.</strong> Acquiring a socket</a></li><li><a href="tokio/io.html"><strong>3.2.</strong> Reading and writing</a></li><li><strong>3.3.</strong> Transforming at the byte level</li><li><a href="tokio/shutdown.html"><strong>3.4.</strong> Closing down a connection</a></li></ul></li><li><strong>4.</strong> Case study: a chat server</li><li><a href="futures/chapter.html"><strong>5.</strong> Futures</a></li><li><ul class="section"><li><a href="futures/def.html"><strong>5.1.</strong> The core definition</a></li><li><a href="futures/read-exact.html"><strong>5.2.</strong> Example: <code>ReadExact</code></a></li><li><strong>5.3.</strong> Example: a timeout wrapper</li><li><strong>5.4.</strong> Push and pull: futures and tasks</li><li><strong>5.5.</strong> The combinators</li><li><strong>5.6.</strong> Cancellation</li><li><strong>5.7.</strong> Relating sync and async code</li><li><strong>5.8.</strong> Example: an RPC client</li></ul></li><li><strong>6.</strong> Streams</li><li><ul class="section"><li><strong>6.1.</strong> The core definition</li><li><strong>6.2.</strong> The combinators</li><li><strong>6.3.</strong> Example: a stream of lines</li></ul></li><li><strong>7.</strong> Sinks</li><li><ul class="section"><li><strong>7.1.</strong> The core definition</li><li><strong>7.2.</strong> The combinators</li><li><strong>7.3.</strong> Example: write buffering</li></ul></li><li><strong>8.</strong> Case study: a chat server</li><li><strong>9.</strong> Transports</li><li><ul class="section"><li><strong>9.1.</strong> Framing</li><li><strong>9.2.</strong> Decoding</li><li><strong>9.3.</strong> Encoding</li><li><strong>9.4.</strong> Example: an http server</li><li><strong>9.5.</strong> Length-delimited framing</li><li><strong>9.6.</strong> Transport layers</li></ul></li><li><strong>10.</strong> Async in practice</li><li><ul class="section"><li><strong>10.1.</strong> Effective programming with futures</li><li><ul class="section"><li><strong>10.1.1.</strong> Multithreading</li><li><strong>10.1.2.</strong> When to use combinators</li><li><strong>10.1.3.</strong> Example: a Github API client</li><li><strong>10.1.4.</strong> Buffering and <code>bytes</code></li></ul></li><li><strong>10.2.</strong> Organizing your code</li><li><ul class="section"><li><strong>10.2.1.</strong> Library guidelines</li><li><strong>10.2.2.</strong> Resource management</li><li><strong>10.2.3.</strong> Structuring tasks</li><li><strong>10.2.4.</strong> Graceful shutdown</li><li><strong>10.2.5.</strong> Backpressure</li></ul></li></ul></li><li><strong>11.</strong> Batteries included</li><li><ul class="section"><li><strong>11.1.</strong> Networking</li><li><ul class="section"><li><strong>11.1.1.</strong> HTTP</li><li><strong>11.1.2.</strong> DNS</li><li><strong>11.1.3.</strong> TLS</li><li><strong>11.1.4.</strong> Websockets</li><li><strong>11.1.5.</strong> Gzip</li><li><strong>11.1.6.</strong> UDP</li></ul></li><li><strong>11.2.</strong> Services</li><li><ul class="section"><li><strong>11.2.1.</strong> Databases</li><li><strong>11.2.2.</strong> Timers</li><li><strong>11.2.3.</strong> File I/O</li><li><strong>11.2.4.</strong> Processes</li><li><strong>11.2.5.</strong> Named piped</li><li><strong>11.2.6.</strong> Signals</li><li><strong>11.2.7.</strong> inotify</li></ul></li></ul></li><li><strong>12.</strong> Advanced topics</li><li><ul class="section"><li><strong>12.1.</strong> Managing the Tokio event loop</li><li><strong>12.2.</strong> Building a custom executor</li></ul></li><li><strong>13.</strong> FAQ</li><li><ul class="section"><li><strong>13.1.</strong> Comparisons to other languages</li><li><strong>13.2.</strong> Rationale for the &quot;pull&quot; model</li></ul></li></ul>
+        </div>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page" tabindex="-1">
+                <div id="menu-bar" class="menu-bar">
+                    <div class="left-buttons">
+                        <i id="sidebar-toggle" class="fa fa-bars"></i>
+                        <i id="theme-toggle" class="fa fa-paint-brush"></i>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <i id="print-button" class="fa fa-print" title="Print this book"></i>
+                    </div>
+                </div>
+
+                <div id="content" class="content">
+                    <a class="header" href="task-model/tasks.html#taming-async-with-tasks" id="taming-async-with-tasks"><h1>Taming async with tasks</h1></a>
+<p>Rust provides asynchrony through <em>tasks</em>, which are:</p>
+<ul>
+<li>Pieces of work that run independently (i.e., possibly concurrently), much like
+OS threads.</li>
+<li>Lightweight, in that they do not require a full OS thread. Instead, a single
+OS thread can juggle any number of independent tasks. This setup is sometimes
+known as &quot;M:N threading&quot; or &quot;user space threads&quot;.</li>
+</ul>
+<p><strong>The key idea is that, any time a task would <a href="task-model/intro.html">block</a>
+waiting for some external event to occur, it instead returns control to the
+thread that was executing it (the &quot;executor&quot;), which can make progress on
+another task instead.</strong></p>
+<p>To see how these ideas work, over the course of this chapter we will build a
+<em>toy</em> version of the task and executor system from the <code>futures</code> crate. At the
+end of the chapter, we'll then connect these toy versions to the more
+sophisticated abstractions in the actual crate.</p>
+<p>We'll start by defining a simple task trait. Here, a task encompasses some
+(possibly ongoing) work; you can ask the task to try to complete its work by
+invoking <code>poll</code>:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+/// An independent, non-blocking computation
+trait ToyTask {
+    /// Attempt to finish executing the task, returning `Async::Pending`
+    /// if the task needs to wait for an event before it can complete.
+    fn poll(&amp;mut self, waker: &amp;Waker) -&gt; Async&lt;()&gt;;
+}
+#}</code></pre></pre>
+<p>At that point, the task will do as much as it can, but it may encounter the need
+to wait for an event, e.g. for data to become available on a socket. Rather than
+blocking at that point, it should return <code>Async::Pending</code>:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+enum Async&lt;T&gt; {
+    /// Work completed with a result of type `T`.
+    Ready(T),
+
+    /// Work was blocked, and the task is set to be woken when ready
+    /// to continue.
+    Pending,
+}
+#}</code></pre></pre>
+<p>The fact that the task <em>returns</em> instead of blocking is what gives the
+underlying thread an opportunity to go do other useful work (like calling <code>poll</code>
+on a <em>different</em> task). But how will we know when to try the original task's
+<code>poll</code> method again?</p>
+<p>If you look back at the <code>ToyTask::poll</code> method, you may notice that there's an
+argument, <code>waker</code>, that we glossed over. This value is an instance of the
+<code>Waker</code> type, which provides a way to wake up a task:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+#[derive(Clone)]
+struct Waker { .. }
+
+impl Waker {
+    /// Signals that the associated task is ready to be `poll`ed again.
+    pub fn wake(&amp;self) { ... }
+}
+#}</code></pre></pre>
+<p>So, <strong>whenever you ask a task to execute, you also give it a handle for waking
+itself back up</strong>. If the task is unable to proceed because it's waiting for data
+on a socket, it can associate that <code>waker</code> handle with the socket, so that when data
+becomes available, the <code>waker</code> call is run.</p>
+<p>The <code>Waker</code> type is essentially just a trait object for the <code>Wake</code> trait, which
+allows different executors to use different wakeup strategies:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+trait Wake: Send + Sync {
+    /// Signals that the associated task is ready to be `poll`ed again.;
+    fn wake(arced: &amp;Arc&lt;Self&gt;)
+}
+
+impl&lt;T: Wake + 'static&gt; From&lt;Arc&lt;T&gt;&gt; for Waker {
+    fn from(wake: Arc&lt;T&gt;) -&gt; Waker { ... }
+}
+#}</code></pre></pre>
+<p>But this is all pretty abstract. Let's walk through the whole story concretely,
+building:</p>
+<ul>
+<li>A simple <em>task executor</em> which can run any number of tasks on a single OS thread;</li>
+<li>A simple <em>timer event loop</em> which can wake up tasks based on timer events;</li>
+<li>A simple example that plugs them together.</li>
+</ul>
+<p>Understanding these mechanics will give you a strong foundation for everything
+else in the book.</p>
+
+                </div>
+
+                <!-- Mobile navigation buttons -->
+                
+                    <a rel="prev" href="task-model/intro.html" class="mobile-nav-chapters previous">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="task-model/exec.html" class="mobile-nav-chapters next">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+
+            </div>
+
+            
+                <a href="task-model/intro.html" class="nav-chapters previous" title="You can navigate through the chapters using the arrow keys">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+            
+
+            
+                <a href="task-model/exec.html" class="nav-chapters next" title="You can navigate through the chapters using the arrow keys">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            
+
+        </div>
+
+
+        <!-- Local fallback for Font Awesome -->
+        <script>
+            if ($(".fa").css("font-family") !== "FontAwesome") {
+                $('<link rel="stylesheet" type="text/css" href="_FontAwesome/css/font-awesome.css">').prependTo('head');
+            }
+        </script>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        
+
+        
+
+        
+
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+    </body>
+</html>

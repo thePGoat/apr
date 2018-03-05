@@ -1,0 +1,1171 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <base href="">
+
+        <link rel="stylesheet" href="book.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <link rel="shortcut icon" href="favicon.png">
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme -->
+        
+
+        
+
+        <!-- Fetch Clipboard.js from CDN but have a local fallback -->
+        <script src="https://cdn.jsdelivr.net/clipboard.js/1.6.1/clipboard.min.js"></script>
+        <script>
+            if (typeof Clipboard == 'undefined') {
+                document.write(unescape("%3Cscript src='clipboard.min.js'%3E%3C/script%3E"));
+            }
+        </script>
+
+        <!-- Fetch JQuery from CDN but have a local fallback -->
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script>
+            if (typeof jQuery == 'undefined') {
+                document.write(unescape("%3Cscript src='jquery.js'%3E%3C/script%3E"));
+            }
+        </script>
+
+        <!-- Fetch store.js from local - TODO add CDN when 2.x.x is available on cdnjs -->
+        <script src="store.js"></script>
+
+        <!-- Custom JS script -->
+        
+
+    </head>
+    <body class="light">
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme = store.get('theme');
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            $('body').removeClass().addClass(theme);
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var sidebar = store.get('sidebar');
+            if (sidebar === "hidden") { $("html").addClass("sidebar-hidden") }
+            else if (sidebar === "visible") { $("html").addClass("sidebar-visible") }
+        </script>
+
+        <div id="sidebar" class="sidebar">
+            <ul class="chapter"><li class="affix"><a href="async-in-rust/chapter.html">Async in Rust: what you need to know</a></li><li><strong>1.</strong> A crash course</li><li><ul class="section"><li><strong>1.1.</strong> Hello, world!</li><li><strong>1.2.</strong> Serving files</li><li><strong>1.3.</strong> Adding caching</li><li><strong>1.4.</strong> Adding streaming</li></ul></li><li><a href="task-model/chapter.html"><strong>2.</strong> Tasks and executors</a></li><li><ul class="section"><li><a href="task-model/intro.html"><strong>2.1.</strong> Background: sync vs. async</a></li><li><a href="task-model/tasks.html"><strong>2.2.</strong> Taming async with tasks</a></li><li><a href="task-model/exec.html"><strong>2.3.</strong> A toy task executor</a></li><li><a href="task-model/events.html"><strong>2.4.</strong> A toy event loop</a></li><li><a href="task-model/finish.html"><strong>2.5.</strong> Putting it all together</a></li><li><a href="task-model/real/section.html"><strong>2.6.</strong> The real task system</a></li><li><ul class="section"><li><a href="task-model/real/tasks.html"><strong>2.6.1.</strong> Tasks</a></li><li><a href="task-model/real/exec.html"><strong>2.6.2.</strong> Executors</a></li><li><a href="task-model/real/events.html"><strong>2.6.3.</strong> Event loops</a></li></ul></li></ul></li><li><a href="tokio/chapter.html"><strong>3.</strong> Asynchronous I/O</a></li><li><ul class="section"><li><a href="tokio/socket.html"><strong>3.1.</strong> Acquiring a socket</a></li><li><a href="tokio/io.html"><strong>3.2.</strong> Reading and writing</a></li><li><strong>3.3.</strong> Transforming at the byte level</li><li><a href="tokio/shutdown.html"><strong>3.4.</strong> Closing down a connection</a></li></ul></li><li><strong>4.</strong> Case study: a chat server</li><li><a href="futures/chapter.html"><strong>5.</strong> Futures</a></li><li><ul class="section"><li><a href="futures/def.html"><strong>5.1.</strong> The core definition</a></li><li><a href="futures/read-exact.html"><strong>5.2.</strong> Example: <code>ReadExact</code></a></li><li><strong>5.3.</strong> Example: a timeout wrapper</li><li><strong>5.4.</strong> Push and pull: futures and tasks</li><li><strong>5.5.</strong> The combinators</li><li><strong>5.6.</strong> Cancellation</li><li><strong>5.7.</strong> Relating sync and async code</li><li><strong>5.8.</strong> Example: an RPC client</li></ul></li><li><strong>6.</strong> Streams</li><li><ul class="section"><li><strong>6.1.</strong> The core definition</li><li><strong>6.2.</strong> The combinators</li><li><strong>6.3.</strong> Example: a stream of lines</li></ul></li><li><strong>7.</strong> Sinks</li><li><ul class="section"><li><strong>7.1.</strong> The core definition</li><li><strong>7.2.</strong> The combinators</li><li><strong>7.3.</strong> Example: write buffering</li></ul></li><li><strong>8.</strong> Case study: a chat server</li><li><strong>9.</strong> Transports</li><li><ul class="section"><li><strong>9.1.</strong> Framing</li><li><strong>9.2.</strong> Decoding</li><li><strong>9.3.</strong> Encoding</li><li><strong>9.4.</strong> Example: an http server</li><li><strong>9.5.</strong> Length-delimited framing</li><li><strong>9.6.</strong> Transport layers</li></ul></li><li><strong>10.</strong> Async in practice</li><li><ul class="section"><li><strong>10.1.</strong> Effective programming with futures</li><li><ul class="section"><li><strong>10.1.1.</strong> Multithreading</li><li><strong>10.1.2.</strong> When to use combinators</li><li><strong>10.1.3.</strong> Example: a Github API client</li><li><strong>10.1.4.</strong> Buffering and <code>bytes</code></li></ul></li><li><strong>10.2.</strong> Organizing your code</li><li><ul class="section"><li><strong>10.2.1.</strong> Library guidelines</li><li><strong>10.2.2.</strong> Resource management</li><li><strong>10.2.3.</strong> Structuring tasks</li><li><strong>10.2.4.</strong> Graceful shutdown</li><li><strong>10.2.5.</strong> Backpressure</li></ul></li></ul></li><li><strong>11.</strong> Batteries included</li><li><ul class="section"><li><strong>11.1.</strong> Networking</li><li><ul class="section"><li><strong>11.1.1.</strong> HTTP</li><li><strong>11.1.2.</strong> DNS</li><li><strong>11.1.3.</strong> TLS</li><li><strong>11.1.4.</strong> Websockets</li><li><strong>11.1.5.</strong> Gzip</li><li><strong>11.1.6.</strong> UDP</li></ul></li><li><strong>11.2.</strong> Services</li><li><ul class="section"><li><strong>11.2.1.</strong> Databases</li><li><strong>11.2.2.</strong> Timers</li><li><strong>11.2.3.</strong> File I/O</li><li><strong>11.2.4.</strong> Processes</li><li><strong>11.2.5.</strong> Named piped</li><li><strong>11.2.6.</strong> Signals</li><li><strong>11.2.7.</strong> inotify</li></ul></li></ul></li><li><strong>12.</strong> Advanced topics</li><li><ul class="section"><li><strong>12.1.</strong> Managing the Tokio event loop</li><li><strong>12.2.</strong> Building a custom executor</li></ul></li><li><strong>13.</strong> FAQ</li><li><ul class="section"><li><strong>13.1.</strong> Comparisons to other languages</li><li><strong>13.2.</strong> Rationale for the &quot;pull&quot; model</li></ul></li></ul>
+        </div>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page" tabindex="-1">
+                <div id="menu-bar" class="menu-bar">
+                    <div class="left-buttons">
+                        <i id="sidebar-toggle" class="fa fa-bars"></i>
+                        <i id="theme-toggle" class="fa fa-paint-brush"></i>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <i id="print-button" class="fa fa-print" title="Print this book"></i>
+                    </div>
+                </div>
+
+                <div id="content" class="content">
+                    <a class="header" href="print.html#async-in-rust-what-you-need-to-know" id="async-in-rust-what-you-need-to-know"><h1>Async in Rust: what you need to know</h1></a>
+<p>There are two things that make asynchronous programming attractive.</p>
+<p>First, it allows you to <strong>do more with less</strong>. You can use a single OS-level
+thread to field any number of simultaneous interactions; a single-threaded
+async server can scale to handle millions of connections.</p>
+<p>Now, some operating systems make it possible to use a large number of OS threads
+<em>relatively</em> cheaply. But there is still overhead. And this leads to the second
+benefit of async programming: <strong>by making &quot;tasks&quot; essentially free, it enables
+highly expressive programming patterns</strong> that would be impractical in a
+synchronous setting.</p>
+<p>In other words, the efficiency gains are so stark that they unlock a powerful
+new style of programming.</p>
+<p>So what's the catch?</p>
+<p>Threads are treated in a first class way at the OS level, but if you want to
+juggle different activities within the same thread, it's all on
+you. Fortunately, Rust is expressive enough that we can build shared, zero-cost
+abstractions that make &quot;task-level&quot; programming a first-class concept as well.</p>
+<p>That said, there remain some important differences between sync and async
+programming in Rust—especially on stable Rust. The purpose of this book is, in
+part, to help guide you through these differences, teaching you a set of
+patterns for effective async programming.</p>
+<p>Finally, it's worth remembering that traditional <em>synchronous</em> programming
+remains quite effective, outside of the highest-scale servers. In particular,
+Rust's advantages around memory footprint and predictability mean that you can
+get much farther with synchronous services than in many other languages. As with
+any other architectural choice, it's important to consider whether your
+application would be better served by using the simpler synchronous model.</p>
+<a class="header" href="print.html#where-async-rust-is-today-and-where-its-headed" id="where-async-rust-is-today-and-where-its-headed"><h2>Where async Rust is today, and where it's headed</h2></a>
+<p><strong>Rust has a strong foundation for async programming</strong> with the <a href="https://github.com/alexcrichton/futures-rs/"><code>futures</code></a> and
+<a href="https://github.com/tokio-rs/tokio/"><code>tokio</code></a> crates, which cover the core abstractions for async, and primitives
+for async I/O, respectively. On top of these crates there's an ecosystem for
+interacting with various protocols and services, including HTTP, SSL, DNS,
+WebSockets, and more. This book covers much of this ecosystem, recommending
+production-quality libraries in each space.</p>
+<p>In addition, <strong>there is ongoing work to improve the ergonomics</strong> via
+<code>async</code>/<code>await</code> notation. This work is currently only available on nightly Rust,
+and is expected to provide more flexible borrowing support in the
+future. Nevertheless, if you're willing to work with nightly today, the library
+itself is stable and helpful. This book also covers its usage.</p>
+<p>As we'll see shortly, there are easy ways to &quot;bridge&quot; between async and sync
+code. In the long run, as async becomes a more first-class part of the language
+itself, the expectation is that core libraries will be written in an async
+fashion, but be easily consumed in either style. We'll see examples of that
+later in the book.</p>
+<a class="header" href="print.html#who-this-book-is-for" id="who-this-book-is-for"><h2>Who this book is for</h2></a>
+<p>This book aims to be a comprehensive, up-to-date guide on the async story in
+Rust, appropriate for beginners and old hands alike:</p>
+<ul>
+<li>
+<p>The early chapters provide a gentle introduction to async programming in
+general, and to Rust's particular take on it.</p>
+</li>
+<li>
+<p>The middle chapters provide more powerful tools, best practices, and larger
+examples to help you work with async in a more serious way.</p>
+</li>
+<li>
+<p>The later chapters cover a cross section of the broader async ecosystem and
+the most advanced features of the core libraries, and more extensive case
+studies.</p>
+</li>
+</ul>
+<p><em>Let's dive in!</em></p>
+<a class="header" href="print.html#tasks-and-executors" id="tasks-and-executors"><h1>Tasks and executors</h1></a>
+<p>To effectively write async code in Rust, you need to have a good grasp on its
+foundation: the task model. Fortunately, that model is made up of only a few
+simple pieces.</p>
+<p>This chapter walks through a high level introduction of the task
+concept, then illustrates how the system fits together by building a working
+task executor and an event loop, and plugging them together.</p>
+<a class="header" href="print.html#background-sync-vs-async" id="background-sync-vs-async"><h1>Background: sync vs. async</h1></a>
+<p>It's often easiest to understand asynchronous programming <em>by contrast</em> with
+synchronous programming. So let's start with a simple sync example:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+// reads 4096 bytes into `my_vec`
+socket.read_exact(&amp;mut my_vec[..4096]);
+#}</code></pre></pre>
+<p>This code is using <a href="https://static.rust-lang.org/doc/master/std/io/trait.Read.html#method.read_exact"><code>read_exact</code></a> from the standard library to read from
+<code>socket</code>. Let's see what the docs say:</p>
+<blockquote>
+<p>Read the exact number of bytes required to fill the given buffer.</p>
+</blockquote>
+<p>So, if this method returns successfully, we're guaranteed that <code>my_vec</code> is
+filled, meaning we've read 4k from <code>socket</code>. Great!</p>
+<p>But what if the data isn't available yet? What if it hasn't even been sent from
+the other side of the socket?</p>
+<p><strong>To fulfill its guarantee, the <code>read_exact</code> method must <em>wait</em>. That's where the
+term &quot;synchrony&quot; comes from: <code>read_exact</code> is <em>sychronizing</em> with the
+availability of the needed data.</strong></p>
+<p>To be more precise, <code>read_exact</code> &quot;blocks&quot; the thread that calls it, meaning that
+the thread cannot make further progress until the data has been received.  The
+problem is that a thread, in general, is a weighty thing to waste. And while
+this thread is blocked, it's doing no useful work; all of the action is at the
+OS level, until the data becomes available and the thread is unblocked.</p>
+<p>More broadly, if we want to handle a number of connections while using methods
+like <code>read_exact</code>, we're going to need something like a thread per connection;
+otherwise, the handling of one connection could be blocked waiting for activity
+on another connection. Even with a lot of tuning, the overhead of threads will
+limit scalability.</p>
+<a class="header" href="print.html#asynchrony" id="asynchrony"><h2>Asynchrony</h2></a>
+<p>To achieve better scalability, we need to avoid tying up an entire thread every
+time we're waiting for some resource to become available. Most operating systems
+provide a &quot;non-blocking&quot;, i.e. <em>asychronous</em> mode for interacting with objects
+like sockets. In this mode, operations that are not immediately ready return
+with an error, allowing you to continue doing other work on the thread.</p>
+<p>Working <em>manually</em> with resources in this way, though, can be quite painful. You
+have to figure out how to juggle all of the &quot;in flight&quot; operations within a
+single thread, even though most of the time those operations are going to
+arise from completely independent activities (like two separate connections).</p>
+<p>Fortunately, Rust provides a way of doing async programming that <em>feels</em> in many
+respects like using threads, but under the hood accesses resources
+asynchronously, and automatically juggles the in-flight operations for you. The
+core ingredient is <em>tasks</em>, which you can think of as &quot;lightweight threads&quot;
+(akin to <a href="https://tour.golang.org/concurrency/1">goroutines</a>) that can be automatically juggled onto a smaller number
+of OS-level threads.</p>
+<p>So let's take a look at the task model!</p>
+<a class="header" href="print.html#taming-async-with-tasks" id="taming-async-with-tasks"><h1>Taming async with tasks</h1></a>
+<p>Rust provides asynchrony through <em>tasks</em>, which are:</p>
+<ul>
+<li>Pieces of work that run independently (i.e., possibly concurrently), much like
+OS threads.</li>
+<li>Lightweight, in that they do not require a full OS thread. Instead, a single
+OS thread can juggle any number of independent tasks. This setup is sometimes
+known as &quot;M:N threading&quot; or &quot;user space threads&quot;.</li>
+</ul>
+<p><strong>The key idea is that, any time a task would <a href="task-model/intro.html">block</a>
+waiting for some external event to occur, it instead returns control to the
+thread that was executing it (the &quot;executor&quot;), which can make progress on
+another task instead.</strong></p>
+<p>To see how these ideas work, over the course of this chapter we will build a
+<em>toy</em> version of the task and executor system from the <code>futures</code> crate. At the
+end of the chapter, we'll then connect these toy versions to the more
+sophisticated abstractions in the actual crate.</p>
+<p>We'll start by defining a simple task trait. Here, a task encompasses some
+(possibly ongoing) work; you can ask the task to try to complete its work by
+invoking <code>poll</code>:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+/// An independent, non-blocking computation
+trait ToyTask {
+    /// Attempt to finish executing the task, returning `Async::Pending`
+    /// if the task needs to wait for an event before it can complete.
+    fn poll(&amp;mut self, waker: &amp;Waker) -&gt; Async&lt;()&gt;;
+}
+#}</code></pre></pre>
+<p>At that point, the task will do as much as it can, but it may encounter the need
+to wait for an event, e.g. for data to become available on a socket. Rather than
+blocking at that point, it should return <code>Async::Pending</code>:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+enum Async&lt;T&gt; {
+    /// Work completed with a result of type `T`.
+    Ready(T),
+
+    /// Work was blocked, and the task is set to be woken when ready
+    /// to continue.
+    Pending,
+}
+#}</code></pre></pre>
+<p>The fact that the task <em>returns</em> instead of blocking is what gives the
+underlying thread an opportunity to go do other useful work (like calling <code>poll</code>
+on a <em>different</em> task). But how will we know when to try the original task's
+<code>poll</code> method again?</p>
+<p>If you look back at the <code>ToyTask::poll</code> method, you may notice that there's an
+argument, <code>waker</code>, that we glossed over. This value is an instance of the
+<code>Waker</code> type, which provides a way to wake up a task:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+#[derive(Clone)]
+struct Waker { .. }
+
+impl Waker {
+    /// Signals that the associated task is ready to be `poll`ed again.
+    pub fn wake(&amp;self) { ... }
+}
+#}</code></pre></pre>
+<p>So, <strong>whenever you ask a task to execute, you also give it a handle for waking
+itself back up</strong>. If the task is unable to proceed because it's waiting for data
+on a socket, it can associate that <code>waker</code> handle with the socket, so that when data
+becomes available, the <code>waker</code> call is run.</p>
+<p>The <code>Waker</code> type is essentially just a trait object for the <code>Wake</code> trait, which
+allows different executors to use different wakeup strategies:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+trait Wake: Send + Sync {
+    /// Signals that the associated task is ready to be `poll`ed again.;
+    fn wake(arced: &amp;Arc&lt;Self&gt;)
+}
+
+impl&lt;T: Wake + 'static&gt; From&lt;Arc&lt;T&gt;&gt; for Waker {
+    fn from(wake: Arc&lt;T&gt;) -&gt; Waker { ... }
+}
+#}</code></pre></pre>
+<p>But this is all pretty abstract. Let's walk through the whole story concretely,
+building:</p>
+<ul>
+<li>A simple <em>task executor</em> which can run any number of tasks on a single OS thread;</li>
+<li>A simple <em>timer event loop</em> which can wake up tasks based on timer events;</li>
+<li>A simple example that plugs them together.</li>
+</ul>
+<p>Understanding these mechanics will give you a strong foundation for everything
+else in the book.</p>
+<a class="header" href="print.html#a-toy-task-executor" id="a-toy-task-executor"><h1>A toy task executor</h1></a>
+<p>Let's build a task executor! Our goal is to make it possible to run any number
+of tasks cooperatively on a <em>single</em> OS thread. To keep things simple, we'll opt
+for the most naive data structures in doing so. Here's what we import:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+use std::mem;
+use std::collections::{HashMap, HashSet};
+use std::sync::{Arc, Mutex, MutexGuard};
+use std::thread::{self, Thread};
+#}</code></pre></pre>
+<p>First up, we'll define a structure that holds the executor's state. The executor
+owns the tasks themselves, and gives each task a <code>usize</code> ID so that the task can
+be referred to externally. In particular, the executor keeps a <code>ready</code> set of
+task IDs for tasks that should be woken up (because an event they were waiting
+on has occurred):</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+// the internal executor state
+struct ExecState {
+    // The next available task ID.
+    next_id: usize,
+
+    // The complete list of tasks, keyed by ID.
+    tasks: HashMap&lt;usize, TaskEntry&gt;,
+
+    // The set of IDs for ready-to-run tasks.
+    ready: HashSet&lt;usize&gt;,
+
+    // The actual OS thread running the executor.
+    thread: Thread,
+}
+#}</code></pre></pre>
+<p>The executor itself just wraps this state with an <code>Arc</code>ed <code>Mutex</code>, allowing it
+to be <em>used</em> from other threads (even though all the tasks themselves will run
+locally):</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+#[derive(Clone)]
+pub struct ToyExec {
+    state: Arc&lt;Mutex&lt;ExecState&gt;&gt;,
+}
+#}</code></pre></pre>
+<p>Now, the <code>tasks</code> field of <code>ExecState</code> provides <code>TaskEntry</code> instances, which box
+up an actual task, together with a <code>Waker</code> for waking it back up:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+struct TaskEntry {
+    task: Box&lt;ToyTask + Send&gt;,
+    wake: Waker,
+}
+#}</code></pre></pre>
+<p>Finally, we have a bit of boilerplate for creating and working with the executor:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+impl ToyExec {
+    pub fn new() -&gt; Self {
+        ToyExec {
+            state: Arc::new(Mutex::new(ExecState {
+                next_id: 0,
+                tasks: HashMap::new(),
+                ready: HashSet::new(),
+                thread: thread::current(),
+            })),
+        }
+    }
+
+    // a convenience method for getting our hands on the executor state
+    fn state_mut(&amp;self) -&gt; MutexGuard&lt;ExecState&gt; {
+        self.state.lock().unwrap()
+    }
+}
+#}</code></pre></pre>
+<p>With all of that scaffolding in place, we can start looking at the inner
+workings of the executor. It's best to start with the core executor loop, which
+for simplicity never exits; it just continually runs all spawned tasks to
+completion:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+impl ToyExec {
+    pub fn run(&amp;self) {
+        loop {
+            // Each time around, we grab the *entire* set of ready-to-run task IDs:
+            let mut ready = mem::replace(&amp;mut self.state_mut().ready, HashSet::new());
+
+            // Now try to `complete` each initially-ready task:
+            for id in ready.drain() {
+                // We take *full ownership* of the task; if it completes, it will
+                // be dropped.
+                let entry = self.state_mut().tasks.remove(&amp;id);
+                if let Some(mut entry) = entry {
+                    if let Async::Pending = entry.task.poll(&amp;entry.wake) {
+                        // The task hasn't completed, so put it back in the table.
+                        self.state_mut().tasks.insert(id, entry);
+                    }
+                }
+            }
+
+            // We've processed all work we acquired on entry; block until more work
+            // is available. If new work became available after our `ready` snapshot,
+            // this will be a no-op.
+            thread::park();
+        }
+    }
+}
+#}</code></pre></pre>
+<p>The main subtlety here is that, in each turn of the loop, we <code>poll</code> everything
+that was ready <em>at the beginning</em>, and then &quot;park&quot; the thread.  The
+<a href="https://static.rust-lang.org/doc/master/std/thread/fn.park.html"><code>park</code></a>/<a href="https://static.rust-lang.org/doc/master/std/thread/struct.Thread.html#method.unpark"><code>unpark</code></a> APIs in <code>std</code> make it very easy to handle blocking and
+waking OS threads. In this case, what we want is for the executor's underlying
+OS thread to block unless or until some additional tasks are ready. There's no
+risk we'll fail to wake up: if another thread invokes <code>unpark</code> between our
+initial read of the <code>ready</code> set and calling <code>park</code>, the call to <code>park</code> will
+immediately return.</p>
+<p>On the other side, here's how a task is woken up:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+impl ExecState {
+    fn wake_task(&amp;mut self, id: usize) {
+        self.ready.insert(id);
+
+        // *after* inserting in the ready set, ensure the executor OS
+        // thread is woken up if it's not already running.
+        self.thread.unpark();
+    }
+}
+
+struct ToyWake {
+    // A link back to the executor that owns the task we want to wake up.
+    exec: SingleThreadExec,
+
+    // The ID for the task we want to wake up.
+    id: usize,
+}
+
+impl Wake for ToyWake {
+    fn wake(&amp;self) {
+        self.exec.state_mut().wake_task(self.id);
+    }
+}
+#}</code></pre></pre>
+<p>The remaining pieces are then straightforward. The <code>spawn</code> method is
+responsible for packaging up a task into a <code>TaskEntry</code> and installing it:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+impl ToyExec {
+    pub fn spawn&lt;T&gt;(&amp;self, task: T)
+        where T: Task + Send + 'static
+    {
+        let mut state = self.state_mut();
+
+        let id = state.next_id;
+        state.next_id += 1;
+
+        let wake = ToyWake { id, exec: self.clone() };
+        let entry = TaskEntry {
+            wake: Waker::from(Arc::new(wake)),
+            task: Box::new(task)
+        };
+        state.tasks.insert(id, entry);
+
+        // A newly-added task is considered immediately ready to run,
+        // which will cause a subsequent call to `park` to immediately
+        // return.
+        state.wake_task(id);
+    }
+}
+#}</code></pre></pre>
+<p>And with that, we've built a task scheduler! But before we get too excited, it's
+important to realize that as written, this implementation leaks tasks due to
+<code>Arc</code> cycles. It's a good exercise to try to observe and fix this problem.</p>
+<p>Still, this was intended as a toy executor after all. Let's move on to building
+a source of events for tasks to wait on.</p>
+<a class="header" href="print.html#a-toy-event-loop" id="a-toy-event-loop"><h1>A toy event loop</h1></a>
+<p>Asynchronous programming is most often used for I/O, but there are many other
+sources of events. In this section, we'll build a tiny <em>event loop</em> that allows
+you to register tasks to be woken up at a specific time.</p>
+<p>To do this, we'll spin up a dedicated timer event thread, whose sole job is to
+wake up tasks at appropriate times. Consumers of the timer just send this thread
+a message saying when they'd like to be woken, and how to wake them:</p>
+<pre><pre class="playpen"><code class="language-rust no_run">
+# #![allow(unused_variables)]
+#fn main() {
+use std::collections::BTreeMap;
+use std::sync::{Arc, mpsc};
+use std::thread;
+use std::time::{Duration, Instant};
+
+/// A handle to a timer, used for registering wakeups
+#[derive(Clone)]
+struct ToyTimer {
+    tx: mpsc::Sender&lt;Registration&gt;,
+}
+
+/// A wakeup request
+struct Registration {
+    at: Instant,
+    wake: Waker,
+}
+
+/// State for the worker thread that processes timer events
+struct Worker {
+    rx: mpsc::Receiver&lt;Registration&gt;,
+    active: BTreeMap&lt;Instant, Waker&gt;
+}
+
+impl ToyTimer {
+    fn new() -&gt; ToyTimer {
+        let (tx, rx) = mpsc::channel();
+        let worker = Worker { rx, active: BTreeMap::new() };
+        thread::spawn(|| worker.work());
+        ToyTimer { tx }
+    }
+
+    // Register a new wakeup with this timer
+    fn register(&amp;self, at: Instant, wake: Waker) {
+        self.tx.send(Registration { at, wake }).unwrap();
+    }
+}
+
+#}</code></pre></pre>
+<p>The event loop lives in the <code>Worker::work</code> method. The basic approach is
+extremely simple: we keep a <code>BTreeMap</code> with the currently-registered wakeups,
+and use a channel to make new registrations. The one bit of cleverness: if it's
+not yet time to fire off any wakeups, but we do have some scheduled, we can use
+<code>recv_timeout</code> on the channel to wait for <em>either</em> a new registration to come
+in, <em>or</em> for it to be time to fire the first existing one off:</p>
+<pre><pre class="playpen"><code class="language-rust no_run">
+# #![allow(unused_variables)]
+#fn main() {
+impl Worker {
+    fn enroll(&amp;mut self, item: Registration) {
+        if self.active.insert(item.at, item.wake).is_some() {
+            // this simple setup doesn't support multiple registrations for
+            // the same instant; we'll revisit that in the next section.
+            panic!(&quot;Attempted to add to registrations for the same instant&quot;)
+        }
+    }
+
+    fn fire(&amp;mut self, key: Instant) {
+        self.active.remove(&amp;key).unwrap().wake();
+    }
+
+    fn work(mut self) {
+        loop {
+            if let Some(first) = self.active.keys().next().cloned() {
+                let now = Instant::now();
+                if first &lt;= now {
+                    self.fire(first);
+                } else {
+                    // we're not ready to fire off `first` yet, so wait until we are
+                    // (or until we get a new registration, which might be for an
+                    // earlier time).
+                    if let Ok(new_registration) = self.rx.recv_timeout(first - now) {
+                        self.enroll(new_registration);
+                    }
+                }
+            } else {
+                // no existing registrations, so unconditionally block until
+                // we receive one.
+                let new_registration = self.rx.recv().unwrap();
+                self.enroll(new_registration)
+            }
+        }
+    }
+}
+#}</code></pre></pre>
+<p>That's it! This kind of &quot;event loop&quot; pattern, where a dedicated thread is
+continually processing events and registrations (or else blocking until they are
+available) is foundational to async programming. Fortunately, to <em>do</em> async
+programming in Rust, you can use off-the-shelf event loops for events of
+interest, as we'll see in the next chapter.</p>
+<p>But before we go there, let's plug together the pieces we've built into a tiny,
+working app.</p>
+<a class="header" href="print.html#putting-it-all-together" id="putting-it-all-together"><h1>Putting it all together</h1></a>
+<p>At this point, we've built a simple executor for running many tasks on a single
+thread, and a simple event loop for dispatching timer events, again from a
+single thread. Now let's plug them together to build an app that can support an
+arbitrary number of tasks periodically &quot;dinging&quot;, using only two OS threads.</p>
+<p>To do this, we'll create a task called <code>Periodic</code>:</p>
+<pre><pre class="playpen"><code class="language-rust no_run">
+# #![allow(unused_variables)]
+#fn main() {
+struct Periodic {
+    // a name for this task
+    id: u64,
+
+    // how often to &quot;ding&quot;
+    period: Duration,
+
+    // when the next &quot;ding&quot; is scheduled
+    next: Instant,
+
+    // a handle back to the timer event loop
+    timer: Timer,
+}
+
+impl Periodic {
+    fn new(id: u64, period: Duration, timer: Timer) -&gt; Periodic {
+        Periodic {
+            id, period, timer, next: Instant::now() + period
+        }
+    }
+}
+#}</code></pre></pre>
+<p>The <code>period</code> field says how often the task should print a &quot;ding&quot; message. The
+implementation is very straightforward; note that the task is intended to run
+forever, continuously printing a message after each <code>period</code> has elapsed:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+impl Task for Periodic {
+    fn poll(&amp;mut self, wake: &amp;Waker) -&gt; Async&lt;()&gt; {
+        // are we ready to ding yet?
+        let now = Instant::now();
+        if now &gt;= self.next {
+            self.next = now + self.period;
+            println!(&quot;Task {} - ding&quot;, self.id);
+        }
+
+        // make sure we're registered to wake up at the next expected `ding`
+        self.timer.register(self.next, wake);
+        Async::Pending
+    }
+}
+#}</code></pre></pre>
+<p>And now, we hook it all together:</p>
+<pre><pre class="playpen"><code class="language-rust no_run">fn main() {
+    let timer = ToyTimer::new();
+    let exec = ToyExec::new();
+
+    for i in 1..10 {
+        exec.spawn(Periodic::new(i, Duration::from_millis(i * 500), timer.clone()));
+    }
+
+    exec.run()
+}
+</code></pre></pre>
+<p>The program generates output like:</p>
+<pre><code>Task 1 - ding
+Task 2 - ding
+Task 1 - ding
+Task 3 - ding
+Task 1 - ding
+Task 4 - ding
+Task 2 - ding
+Task 1 - ding
+Task 5 - ding
+Task 1 - ding
+Task 6 - ding
+Task 2 - ding
+Task 3 - ding
+Task 1 - ding
+Task 7 - ding
+Task 1 - ding
+...
+</code></pre>
+<p>Stepping back, what we've done here is a bit magical: the implementation of
+<code>Task</code> for <code>Periodic</code> is written in a pretty straightforward way that says how a
+<em>single task</em> should behave. But then we can interleave any number of such
+tasks, using only two OS threads total! That's the power of asynchrony.</p>
+<a class="header" href="print.html#exercise-multi-enrollment" id="exercise-multi-enrollment"><h2>Exercise: multi-enrollment</h2></a>
+<p>The timer event loop contains an unfortunate explicit panic: &quot;Attempted to add
+to registrations for the same instant&quot;.</p>
+<ul>
+<li>Is it possible to encounter this panic in the above program?</li>
+<li>What would happen if we simply removed the panic?</li>
+<li>How can the code be improved to avoid this issue altogether?</li>
+</ul>
+<a class="header" href="print.html#exercise-winding-down" id="exercise-winding-down"><h2>Exercise: winding down</h2></a>
+<p>Both the <code>Periodic</code> task and the <code>SingleThreadedExec</code> are designed to run
+without ever stopping.</p>
+<ul>
+<li>Modify <code>Periodic</code> so that each instance is set to ding only a fixed number of
+times, and then the task is shut down.</li>
+<li>Modify <code>SingleThreadedExec</code> to stop running when there are no more tasks.</li>
+<li>Test your solution!</li>
+</ul>
+<a class="header" href="print.html#the-real-task-system" id="the-real-task-system"><h1>The real task system</h1></a>
+<p>We've worked through toy definitions of a number of components in this chapter,
+but now it's time to get acquainted with the more efficient and powerful
+abstractions that are part of the <code>futures</code> crate.</p>
+<ul>
+<li><a href="task-model/real/tasks.html">The <code>futures</code> story for tasks</a>.</li>
+<li><a href="task-model/real/exec.html">The <code>futures</code> story for executors</a>.</li>
+<li><a href="task-model/real/events.html">The <code>futures</code> story for event loops</a>.</li>
+</ul>
+<a class="header" href="print.html#tasks" id="tasks"><h1>Tasks</h1></a>
+<p>The <code>futures</code> crate does not define a <code>Task</code> trait directly, but instead defines
+the more general concept of <em>futures</em>, something we'll be diving into in detail
+soon. For the moment, though, let's look at the core definition for futures:</p>
+<pre><pre class="playpen"><code class="language-rust no_run">
+# #![allow(unused_variables)]
+#fn main() {
+/// An asynchronous computation that completes with a value or an error.
+trait Future {
+    type Item;
+    type Error;
+
+    /// Attempt to complete the future, yielding `Ok(Async::Pending)`
+    /// if the future is blocked waiting for some other event to occur.
+    fn poll(&amp;mut self, cx: task::Context) -&gt; Poll&lt;Self::Item, Self::Error&gt;;
+}
+
+type Poll&lt;T, E&gt; = Result&lt;Async&lt;T&gt;, E&gt;;
+#}</code></pre></pre>
+<p>Futures are much like tasks, except that they return a result (which allows them
+to be composed). In other words, you can think of a <em>task</em> as any type that
+implements <code>Future&lt;Item = (), Error = !&gt;</code>.</p>
+<p>There is another difference, however: the lack of a <code>WakeHandle</code> argument. In
+practice, this argument would almost always be passed down, unchanged, from the
+executor all the way to the point of enqueueing the handle in an appropriate
+place. Thus with the <code>futures</code> crate, executors provide a <code>WakeHandle</code> in
+thread-local storage for convenience. You can get it using the <code>current_wake</code>
+function in <code>futures::task</code>:</p>
+<pre><pre class="playpen"><code class="language-rust no_run">
+# #![allow(unused_variables)]
+#fn main() {
+/// When called within a task being executed, returns the wakeup handle for
+/// that task. Panics if called outside of task execution.
+fn current_wake() -&gt; WakeHandle;
+#}</code></pre></pre>
+<a class="header" href="print.html#explicitly-relating-future-and-toytask" id="explicitly-relating-future-and-toytask"><h2>Explicitly relating <code>Future</code> and <code>ToyTask</code></h2></a>
+<p>It can be helpful to see <em>precisely</em> how <code>Future</code> and <code>ToyTask</code> relate. To do
+this, we'll introduce a wrapper type for converting a <code>ToyTask</code> to a <code>Future</code>:</p>
+<pre><pre class="playpen"><code class="language-rust no_run">
+# #![allow(unused_variables)]
+#fn main() {
+use futures::task;
+use futures::{Future, AsyncResult};
+
+struct ToyTaskToFuture&lt;T&gt;(T);
+
+impl&lt;T: ToyTask&gt; Future for ToyTaskToFuture&lt;T&gt; {
+    type Item = ();
+    type Error = !;
+
+    fn get(&amp;mut self) -&gt; AsyncResult&lt;(), !&gt; {
+        Ok(self.0.complete(task::current_wake()))
+    }
+}
+#}</code></pre></pre>
+<a class="header" href="print.html#executors" id="executors"><h1>Executors</h1></a>
+<p>First off, in the <code>futures</code> crate, executors are objects that can spawn a
+<code>Future&lt;Item = (), Error = !&gt;</code> as a new task. There are two key executors to be
+familiar with.</p>
+<a class="header" href="print.html#the-threadpool-executor" id="the-threadpool-executor"><h2>The <code>ThreadPool</code> executor</h2></a>
+<p>The simplest executor is <code>futures::executor::ThreadPool</code>, which schedules tasks
+onto a fixed pool of OS threads. Splitting the tasks across multiple OS threads
+means that even if a particular <code>tick</code> invocation takes a long time, other tasks
+can continue to make progress on other threads.</p>
+<p>Setup and usage is very straightforward:</p>
+<pre><pre class="playpen"><code class="language-rust no_run">
+# #![allow(unused_variables)]
+#fn main() {
+// Set up the thread pool, which spins up worker threads behind the scenes.
+let exec = ThreadPool::new();
+
+// Spawn tasks onto the thread pool.
+exec.spawn(my_task);
+exec.spawn(other_task);
+#}</code></pre></pre>
+<p>We'll see later on a variety of ways to communicate with spawned tasks.</p>
+<p>Note that, because the task will be executed on arbitrary threads, it is
+required to be <code>Send</code> and <code>'static</code>.</p>
+<a class="header" href="print.html#the-currentthread-executor" id="the-currentthread-executor"><h2>The <code>CurrentThread</code> executor</h2></a>
+<p>The <code>futures</code> crate also provides a single-threaded executor called
+<code>CurrentThread</code>, similar in spirit to the one that we built. The key difference
+from the <code>ThreadPool</code> executor is that <code>CurrentThread</code> can execute non-<code>Send</code>
+and non-<code>'static</code> tasks. This is possible because the executor is run via an
+explicit call from the current thread:</p>
+<pre><pre class="playpen"><code class="language-rust no_run">
+# #![allow(unused_variables)]
+#fn main() {
+// start up the CurrentThread executor, which by default runs until all spawned
+// tasks are complete:
+CurrentThread::run(|_| {
+    CurrentThread::spawn(my_task);
+    CurrentThread::spawn(other_task);
+})
+#}</code></pre></pre>
+<p>The tradeoffs between <code>ThreadPool</code> and <code>CurrentThread</code> are explained in more
+detail <a href="async-in-practice/concurrency.html">later in the book</a>.</p>
+<a class="header" href="print.html#spurious-wakeups" id="spurious-wakeups"><h2>Spurious wakeups</h2></a>
+<p>In general, executors guarantee that they will call <code>get</code> any time a task is
+awoken. However, they may <em>also</em> call <code>get</code> at arbitrary other times. Thus,
+tasks cannot assume that a call to <code>get</code> means progress is possible; they should
+always re-attempt the operation that previously blocked them, and be prepared to
+wait again.</p>
+<a class="header" href="print.html#exercises" id="exercises"><h2>Exercises</h2></a>
+<ul>
+<li>Rewrite the example from the previous section to use the <code>ThreadPool</code> executor.</li>
+<li>Rewrite the example from the previous section to use the <code>CurrentThread</code> executor.</li>
+<li>What are the tradeoffs between using these two executors for the timer example?</li>
+</ul>
+<a class="header" href="print.html#event-loops" id="event-loops"><h1>Event loops</h1></a>
+<a class="header" href="print.html#tokio-async-network-io" id="tokio-async-network-io"><h1>Tokio: async network I/O</h1></a>
+<p>The <code>tokio</code> crate complements the <code>futures</code> crate by providing a low-level,
+cross-platform way to do asynchronous network I/O. The crate's API is modeled
+after <code>std::net</code> and provides async versions of the same core functionality,
+with strong cross-platform support.</p>
+<p>This chapter covers both the primary <code>tokio</code> networking APIs as well as some
+important tools in the <code>futures</code> crate for doing async I/O in general. It closes
+by building a proxy server using <code>tokio</code> directly that aims for low overhead by
+minimizing the number of in-flight buffers needed at any time.</p>
+<a class="header" href="print.html#acquiring-a-socket" id="acquiring-a-socket"><h1>Acquiring a socket</h1></a>
+<p>Accepting TCP connections with Tokio is much like doing so with <code>std::net</code>,
+except that it works asynchronously. In particular, <code>tokio::net</code> contains a
+<code>TcpListener</code> with an API similar to the <code>std::net</code> version:</p>
+<pre><pre class="playpen"><code class="language-rust no_run">
+# #![allow(unused_variables)]
+#fn main() {
+type AsyncIoResult&lt;T&gt; = AsyncResult&lt;T, io::Error&gt;;
+
+impl TcpListener {
+    fn bind(addr: &amp;SocketAddr) -&gt; io::Result&lt;TcpListener&gt;;
+    fn accept(&amp;mut self) -&gt; AsyncIoResult&lt;(TcpStream, SocketAddr)&gt;;
+}
+#}</code></pre></pre>
+<p>Just like the occurrence of <code>Result</code> in a signature tells you that a function
+may fail with an error, the occurrence of <code>Async</code> or <code>AsyncResult</code> tells you
+that the function is intended to be used within the async task system. Thus,
+looking at the two functions above, we can see that <code>bind</code> is a a standard
+synchronous function, while <code>accept</code> is an asynchronous method.</p>
+<p>To quickly see these APIs in action, let's build a future that will accept
+connections asynchronously, record the peer address, and then close the
+connection:</p>
+<pre><pre class="playpen"><code class="language-rust no_run">
+# #![allow(unused_variables)]
+#fn main() {
+use tokio::net::TcpListener;
+
+struct LogAndDrop {
+    listener: TcpListener,
+}
+
+impl LogAndDrop {
+    fn new(addr: &amp;SocketAddr) -&gt; io::Result&lt;LogAndDrop&gt; {
+        LogAndDrop {
+            listener: TcpListener::bind(addr)?
+        }
+    }
+}
+
+impl Future for LogAndDrop {
+    type Item = ();
+    type Error = io::Error;
+
+    fn complete(&amp;mut self) -&gt; AsyncIoResult&lt;()&gt; {
+        loop {
+            match self.listener.accept(wake) {
+                Ok(Async::Done((_, peer))) =&gt; {
+                    println!(&quot;Connected to peer {:?}&quot;, peer);
+                }
+                Ok(Async::WillWake) =&gt; {
+                    return Ok(Async::WillWake);
+                }
+                Err(e) =&gt; {
+                    println!(&quot;Error: {:?}; shutting down&quot;, e);
+                    return Err(e);
+                }
+            }
+        }
+    }
+}
+#}</code></pre></pre>
+<p>Note that, in the case that we succeed in accepting a connection, after logging
+it we immediately loop and try to take another. This is typical for async tasks:
+the task code does as much work as it possibly can, stopping only when
+encountering an obstruction (such as the listener returning <code>WillWake</code>), at
+which point it will be descheduled and woken up later, when the obstruction has
+been cleared.</p>
+<a class="header" href="print.html#reading-and-writing" id="reading-and-writing"><h1>Reading and writing</h1></a>
+<p>The <code>futures</code> crate contains an <code>io</code> module, which is the async counterpart to
+<code>std::io</code>. That module defines, in particular, the core primitives for doing
+async reading, writing, and flushing:</p>
+<pre><pre class="playpen"><code class="language-rust no_run">
+# #![allow(unused_variables)]
+#fn main() {
+trait AsyncRead {
+    fn read(&amp;mut self, buf: &amp;mut [u8]) -&gt; AsyncIoResult&lt;usize&gt;;
+}
+
+trait AsyncWrite {
+    fn write(&amp;mut self, buf: &amp;[u8]) -&gt; AsyncIoResult&lt;usize&gt;;
+    fn flush(&amp;mut self) -&gt; AsyncIoResult&lt;()&gt;;
+}
+#}</code></pre></pre>
+<p>These methods work exactly like their counterparts in <code>std</code>, except that if the
+underlying I/O object is not ready to perform the requested action, they return
+<code>Ok(Async::WillWake)</code>, and stash the given <code>wake</code> to be used once I/O is
+ready. Once more, the fact that their result type involves <code>Async</code> is the clear
+signal that they plug into the async task system.</p>
+<a class="header" href="print.html#example-echoing-input" id="example-echoing-input"><h2>Example: echoing input</h2></a>
+<p>While the <code>AsyncRead</code> and <code>AsyncWrite</code> traits are simple enough, there are some
+significant differences in <em>using</em> them, compared to the synchronous
+versions. Most importantly, async tasks generally have an explicit <em>overall
+state</em> associated with them (which plays the role usually played by the stack in
+synchronous programming). To see this concretely, let's write a task for echoing
+everything sent on a socket. First, the basic setup:</p>
+<pre><pre class="playpen"><code class="language-rust no_run">
+# #![allow(unused_variables)]
+#fn main() {
+use tokio::net::TcpStream;
+
+// The task structure -- echoing on a *single* connection
+struct Echo {
+    // The connection
+    io: TcpStream,
+
+    // Buffered data to be echoed back
+    buf: Vec&lt;u8&gt;,
+
+    // The current state of the &quot;echo state machine&quot;
+    state: EchoState,
+}
+
+enum EchoState {
+    // The next step is reading into `buf`, from the front
+    Reading,
+
+    // The next step is echoing back out `buf`, from the
+    // given start and end points.
+    Writing(usize, usize),
+}
+
+impl Echo {
+    fn new(io: TcpStream) -&gt; Echo {
+        Echo {
+            io,
+            state: EchoState::Reading,
+            buf: vec![0; 4096],
+        }
+    }
+}
+#}</code></pre></pre>
+<p>The idea then is that the <code>Echo</code> task alternates between reading and writing. If
+at any point it is unable to perform that task, it returns <code>Async::WillWake</code>,
+having been enrolled to be woken when the needed I/O is available. Such
+state-machine tasks almost always have an outer <code>loop</code> that continuously moves
+through the states until an obstruction is reached:</p>
+<pre><pre class="playpen"><code class="language-rust no_run">
+# #![allow(unused_variables)]
+#fn main() {
+impl Future for Echo {
+    type Item = ();
+    type Error = io::Error;
+
+    fn complete(&amp;mut self) -&gt; AsyncIoResult&lt;()&gt; {
+        loop {
+            self.state = match self.state {
+                EchoState::Reading =&gt; {
+                    match self.io.read(&amp;mut self.buf)? {
+                        Async::WillWake =&gt; return Ok(Async::WillWake),
+                        Async::Done(len) =&gt; EchoState::Writing(0, len),
+                    }
+                }
+                EchoState::Writing(from, to) if from &gt;= to =&gt; {
+                    EchoState::Reading
+                }
+                EchoState::Writing(from, to) =&gt; {
+                    match self.io.write(&amp;self.buf[from..to])? {
+                        Async::WillWake =&gt; return Ok(Async::WillWake),
+                        Async::Done(n) =&gt; EchoState::Writing(from + n, to),
+                    }
+                }
+            };
+        }
+    }
+}
+#}</code></pre></pre>
+<p>It's important to note that we can freely &quot;bubble up&quot; <code>WillWake</code>, because if a
+function like <code>read</code>, returns it, that function has already <em>guaranteed</em> to wake
+up our task when <code>read</code>ing is possible. In particular, the <code>tokio</code> crate takes
+care of stashing the <code>WakeHandle</code> as necessary whenever we attempt an
+<code>AsyncRead::read</code>, and so on. All we have to do is bubble out the <code>WillWake</code>
+result.</p>
+<p>While the code here is not <em>so</em> complicated, it's a bit noisy for something so
+simple. Much of the rest of this book will cover higher-level abstractions that
+cut down on the noise. For this kind of low-level programming, though, the
+futures crate provides a <code>try_done</code> macro that works much like the <code>?</code> operator,
+except that it <em>also</em> bubbles out <code>Async::WillWake</code>. Using that macro, we can
+rewrite the code as follows:</p>
+<pre><pre class="playpen"><code class="language-rust no_run">
+# #![allow(unused_variables)]
+#fn main() {
+impl Future for Echo {
+    type Item = ();
+    type Error = io::Error;
+
+    fn complete(&amp;mut self) -&gt; AsyncIoResult&lt;()&gt; {
+        loop {
+            self.state = match self.state {
+                EchoState::Reading =&gt; {
+                    let let = try_done!(self.io.read(&amp;mut self.buf));
+                    EchoState::Writing(0, len)
+                }
+                EchoState::Writing(from, to) if from &gt;= to =&gt; {
+                    EchoState::Reading
+                }
+                EchoState::Writing(from, to) =&gt; {
+                    let n = try_done!(self.io.write(&amp;self.buf[from..to]))
+                    EchoState::Writing(from + n, to)
+                }
+            };
+        }
+    }
+}
+#}</code></pre></pre>
+<p>As we'll see in the <a href="futures/_chapter.html">Futures</a> chapter, though, we'll
+ultimately do better than this, by avoid writing a state machine at all.</p>
+<a class="header" href="print.html#exercises-1" id="exercises-1"><h2>Exercises</h2></a>
+<ul>
+<li>What would happen if we did not include the outer <code>loop</code>?</li>
+<li>Use the <code>CurrentThread</code> executor and <code>TcpListener</code> to turn the above code into
+a complete, working server.</li>
+</ul>
+<p>https://gist.github.com/alexcrichton/da80683060f405d6be0e06b426588886</p>
+<a class="header" href="print.html#closing-down-a-connection" id="closing-down-a-connection"><h1>Closing down a connection</h1></a>
+<p>In the synchronous world, you often don't have to worry too much about
+flushing. You can freely write to a buffered I/O object and it will periodically
+flush as you do so. And, most importantly, if at any point you <em>drop</em> the
+object, the remaining content of the buffer is automatically flushed. Worst
+case, there is an error trying to perform this flush, which gets swallowed; but
+generally there's not much you could've done about such an error anyway.</p>
+<p>In the async world, flushing is more critical, for a simple reason: <strong>the model
+does not afford us the ability to automatically flush on drop</strong>. In particular,
+<em>forcing</em> a flush means potentially blocking the calling thread until that flush
+completes. Since async I/O objects are generally floating around within executor
+tasks, this is a non-starter; blocking an executor can bring the whole system to
+a halt.</p>
+<p>Thus, it's critical to ensure all data is flushed before dropping an async I/O
+object, using <code>AsyncWrite::flush</code>.</p>
+<a class="header" href="print.html#futures" id="futures"><h1>Futures</h1></a>
+<p>Up until now, we've been working with the task model and I/O events in a
+&quot;direct&quot; way, writing code that manually juggles <code>Async</code> values and
+<code>WakeHandle</code>s. In this chapter, we'll see how this kind of code can be fit into
+a general abstraction, <em>futures</em>, that provides a number of tools for working at
+a higher level.</p>
+<a class="header" href="print.html#the-core-definition" id="the-core-definition"><h1>The core definition</h1></a>
+<p>In Rust, a future is <strong>an asynchronous computation that can be driven to produce
+a value</strong>. It represents a value that may become available in the future, but
+which requires pushing along the computation to produce it.</p>
+<p>We've <a href="task-model/real/tasks.html">already seen</a> the core definitions of the
+<code>Future</code> trait, describing such computations:</p>
+<pre><pre class="playpen"><code class="language-rust no_run">
+# #![allow(unused_variables)]
+#fn main() {
+/// An asynchronous computation that completes with a value or an error.
+trait Future {
+    type Item;
+    type Error;
+
+    /// Attempt to complete the future, yielding `Ok(Async::WillWake)`
+    /// if the future is blocked waiting for some other event to occur.
+    fn get(&amp;mut self) -&gt; AsyncResult&lt;Self::Item, Self::Error&gt;;
+
+    // ... and a large number of default methods that we'll meet shortly!
+}
+
+type AsyncResult&lt;T, E&gt; = Result&lt;Async&lt;T&gt;, E&gt;;
+
+enum Async&lt;T&gt; {
+    /// Work completed with a result of type `T`.
+    Done(T),
+
+    /// Work was blocked, and the task is set to be woken when ready
+    /// to continue.
+    WillWake,
+}
+#}</code></pre></pre>
+<p>Just calling <code>get</code> once does <em>not</em> guarantee that a final value will be
+produced, and if the future is blocked waiting on some other event to occur, it
+is not guaranteed to make progress until <code>get</code> is called again. The first part
+of this chapter will focus on exactly <em>who</em> calls <code>get</code>, and <em>when</em>.</p>
+<p>What makes futures interesting is that, by abstracting out the very general idea
+of &quot;computing something asychronously&quot;, we make it possible to combine such
+computations in expressive and surprising ways. This also informs their
+relationship to tasks: a task is generally made up of a number of smaller
+futures that have been stitched together.</p>
+<a class="header" href="print.html#example-readexact" id="example-readexact"><h1>Example: <code>ReadExact</code></h1></a>
+<p>Let's get started with a useful example. The standard library's <code>Read</code> trait
+provides a convenient function, <code>read_exact</code>, which reads a specific number of
+bytes from an I/O object (which may require issuing multiple calls to the <code>read</code>
+method).</p>
+<p>We want to &quot;port&quot; this functionality to the async world. Futures are a perfect
+match: we can represent</p>
+<pre><pre class="playpen"><code class="language-rust no_run">
+# #![allow(unused_variables)]
+#fn main() {
+struct ReadExactData&lt;R&gt; {
+    reader: R,
+    buf: Vec&lt;u8&gt;,
+}
+
+struct ReadExact&lt;R&gt; {
+    data: Option&lt;ReadExactData&lt;R&gt;&gt;,
+    from: usize,
+    to: usize,
+}
+
+fn read_exact&lt;R&gt;(reader: R, len: usize) -&gt; ReadExact&lt;R&gt; {
+    ReadExact {
+        data: Some(ReadExactData {
+            reader,
+            buf: vec![0; len],
+        },
+        from: 0,
+        to: len,
+    }
+}
+#}</code></pre></pre>
+<pre><pre class="playpen"><code class="language-rust no_run">
+# #![allow(unused_variables)]
+#fn main() {
+impl&lt;R: AsyncRead&gt; Future for ReadExact&lt;R&gt; {
+    type Item = ReadExactData&lt;R&gt;;
+    type Error = io::Error;
+
+    fn get(&amp;mut self) -&gt; AsynIoResult&lt;Self::Item&gt; {
+        use std::mem;
+
+        while self.from &lt; self.to {
+            let data = self.data.as_mut().unwrap();
+            let n = try_done!(data.read(&amp;mut data.buf[data.from .. data.to]));
+            data.from += n;
+        }
+
+        Ok(Async::Done(self.data.take().unwrap()))
+    }
+}
+#}</code></pre></pre>
+
+                </div>
+
+                <!-- Mobile navigation buttons -->
+                
+
+                
+
+            </div>
+
+            
+
+            
+
+        </div>
+
+
+        <!-- Local fallback for Font Awesome -->
+        <script>
+            if ($(".fa").css("font-family") !== "FontAwesome") {
+                $('<link rel="stylesheet" type="text/css" href="_FontAwesome/css/font-awesome.css">').prependTo('head');
+            }
+        </script>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        
+
+        
+
+        
+
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+    </body>
+</html>

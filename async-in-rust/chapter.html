@@ -1,0 +1,194 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Async in Rust: what you need to know - </title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <base href="../">
+
+        <link rel="stylesheet" href="book.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <link rel="shortcut icon" href="favicon.png">
+
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme -->
+        
+
+        
+
+        <!-- Fetch Clipboard.js from CDN but have a local fallback -->
+        <script src="https://cdn.jsdelivr.net/clipboard.js/1.6.1/clipboard.min.js"></script>
+        <script>
+            if (typeof Clipboard == 'undefined') {
+                document.write(unescape("%3Cscript src='clipboard.min.js'%3E%3C/script%3E"));
+            }
+        </script>
+
+        <!-- Fetch JQuery from CDN but have a local fallback -->
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script>
+            if (typeof jQuery == 'undefined') {
+                document.write(unescape("%3Cscript src='jquery.js'%3E%3C/script%3E"));
+            }
+        </script>
+
+        <!-- Fetch store.js from local - TODO add CDN when 2.x.x is available on cdnjs -->
+        <script src="store.js"></script>
+
+        <!-- Custom JS script -->
+        
+
+    </head>
+    <body class="light">
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme = store.get('theme');
+            if (theme === null || theme === undefined) { theme = 'light'; }
+            $('body').removeClass().addClass(theme);
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var sidebar = store.get('sidebar');
+            if (sidebar === "hidden") { $("html").addClass("sidebar-hidden") }
+            else if (sidebar === "visible") { $("html").addClass("sidebar-visible") }
+        </script>
+
+        <div id="sidebar" class="sidebar">
+            <ul class="chapter"><li class="affix"><a href="async-in-rust/chapter.html" class="active">Async in Rust: what you need to know</a></li><li><strong>1.</strong> A crash course</li><li><ul class="section"><li><strong>1.1.</strong> Hello, world!</li><li><strong>1.2.</strong> Serving files</li><li><strong>1.3.</strong> Adding caching</li><li><strong>1.4.</strong> Adding streaming</li></ul></li><li><a href="task-model/chapter.html"><strong>2.</strong> Tasks and executors</a></li><li><ul class="section"><li><a href="task-model/intro.html"><strong>2.1.</strong> Background: sync vs. async</a></li><li><a href="task-model/tasks.html"><strong>2.2.</strong> Taming async with tasks</a></li><li><a href="task-model/exec.html"><strong>2.3.</strong> A toy task executor</a></li><li><a href="task-model/events.html"><strong>2.4.</strong> A toy event loop</a></li><li><a href="task-model/finish.html"><strong>2.5.</strong> Putting it all together</a></li><li><a href="task-model/real/section.html"><strong>2.6.</strong> The real task system</a></li><li><ul class="section"><li><a href="task-model/real/tasks.html"><strong>2.6.1.</strong> Tasks</a></li><li><a href="task-model/real/exec.html"><strong>2.6.2.</strong> Executors</a></li><li><a href="task-model/real/events.html"><strong>2.6.3.</strong> Event loops</a></li></ul></li></ul></li><li><a href="tokio/chapter.html"><strong>3.</strong> Asynchronous I/O</a></li><li><ul class="section"><li><a href="tokio/socket.html"><strong>3.1.</strong> Acquiring a socket</a></li><li><a href="tokio/io.html"><strong>3.2.</strong> Reading and writing</a></li><li><strong>3.3.</strong> Transforming at the byte level</li><li><a href="tokio/shutdown.html"><strong>3.4.</strong> Closing down a connection</a></li></ul></li><li><strong>4.</strong> Case study: a chat server</li><li><a href="futures/chapter.html"><strong>5.</strong> Futures</a></li><li><ul class="section"><li><a href="futures/def.html"><strong>5.1.</strong> The core definition</a></li><li><a href="futures/read-exact.html"><strong>5.2.</strong> Example: <code>ReadExact</code></a></li><li><strong>5.3.</strong> Example: a timeout wrapper</li><li><strong>5.4.</strong> Push and pull: futures and tasks</li><li><strong>5.5.</strong> The combinators</li><li><strong>5.6.</strong> Cancellation</li><li><strong>5.7.</strong> Relating sync and async code</li><li><strong>5.8.</strong> Example: an RPC client</li></ul></li><li><strong>6.</strong> Streams</li><li><ul class="section"><li><strong>6.1.</strong> The core definition</li><li><strong>6.2.</strong> The combinators</li><li><strong>6.3.</strong> Example: a stream of lines</li></ul></li><li><strong>7.</strong> Sinks</li><li><ul class="section"><li><strong>7.1.</strong> The core definition</li><li><strong>7.2.</strong> The combinators</li><li><strong>7.3.</strong> Example: write buffering</li></ul></li><li><strong>8.</strong> Case study: a chat server</li><li><strong>9.</strong> Transports</li><li><ul class="section"><li><strong>9.1.</strong> Framing</li><li><strong>9.2.</strong> Decoding</li><li><strong>9.3.</strong> Encoding</li><li><strong>9.4.</strong> Example: an http server</li><li><strong>9.5.</strong> Length-delimited framing</li><li><strong>9.6.</strong> Transport layers</li></ul></li><li><strong>10.</strong> Async in practice</li><li><ul class="section"><li><strong>10.1.</strong> Effective programming with futures</li><li><ul class="section"><li><strong>10.1.1.</strong> Multithreading</li><li><strong>10.1.2.</strong> When to use combinators</li><li><strong>10.1.3.</strong> Example: a Github API client</li><li><strong>10.1.4.</strong> Buffering and <code>bytes</code></li></ul></li><li><strong>10.2.</strong> Organizing your code</li><li><ul class="section"><li><strong>10.2.1.</strong> Library guidelines</li><li><strong>10.2.2.</strong> Resource management</li><li><strong>10.2.3.</strong> Structuring tasks</li><li><strong>10.2.4.</strong> Graceful shutdown</li><li><strong>10.2.5.</strong> Backpressure</li></ul></li></ul></li><li><strong>11.</strong> Batteries included</li><li><ul class="section"><li><strong>11.1.</strong> Networking</li><li><ul class="section"><li><strong>11.1.1.</strong> HTTP</li><li><strong>11.1.2.</strong> DNS</li><li><strong>11.1.3.</strong> TLS</li><li><strong>11.1.4.</strong> Websockets</li><li><strong>11.1.5.</strong> Gzip</li><li><strong>11.1.6.</strong> UDP</li></ul></li><li><strong>11.2.</strong> Services</li><li><ul class="section"><li><strong>11.2.1.</strong> Databases</li><li><strong>11.2.2.</strong> Timers</li><li><strong>11.2.3.</strong> File I/O</li><li><strong>11.2.4.</strong> Processes</li><li><strong>11.2.5.</strong> Named piped</li><li><strong>11.2.6.</strong> Signals</li><li><strong>11.2.7.</strong> inotify</li></ul></li></ul></li><li><strong>12.</strong> Advanced topics</li><li><ul class="section"><li><strong>12.1.</strong> Managing the Tokio event loop</li><li><strong>12.2.</strong> Building a custom executor</li></ul></li><li><strong>13.</strong> FAQ</li><li><ul class="section"><li><strong>13.1.</strong> Comparisons to other languages</li><li><strong>13.2.</strong> Rationale for the &quot;pull&quot; model</li></ul></li></ul>
+        </div>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page" tabindex="-1">
+                <div id="menu-bar" class="menu-bar">
+                    <div class="left-buttons">
+                        <i id="sidebar-toggle" class="fa fa-bars"></i>
+                        <i id="theme-toggle" class="fa fa-paint-brush"></i>
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <i id="print-button" class="fa fa-print" title="Print this book"></i>
+                    </div>
+                </div>
+
+                <div id="content" class="content">
+                    <a class="header" href="async-in-rust/chapter.html#async-in-rust-what-you-need-to-know" id="async-in-rust-what-you-need-to-know"><h1>Async in Rust: what you need to know</h1></a>
+<p>There are two things that make asynchronous programming attractive.</p>
+<p>First, it allows you to <strong>do more with less</strong>. You can use a single OS-level
+thread to field any number of simultaneous interactions; a single-threaded
+async server can scale to handle millions of connections.</p>
+<p>Now, some operating systems make it possible to use a large number of OS threads
+<em>relatively</em> cheaply. But there is still overhead. And this leads to the second
+benefit of async programming: <strong>by making &quot;tasks&quot; essentially free, it enables
+highly expressive programming patterns</strong> that would be impractical in a
+synchronous setting.</p>
+<p>In other words, the efficiency gains are so stark that they unlock a powerful
+new style of programming.</p>
+<p>So what's the catch?</p>
+<p>Threads are treated in a first class way at the OS level, but if you want to
+juggle different activities within the same thread, it's all on
+you. Fortunately, Rust is expressive enough that we can build shared, zero-cost
+abstractions that make &quot;task-level&quot; programming a first-class concept as well.</p>
+<p>That said, there remain some important differences between sync and async
+programming in Rust—especially on stable Rust. The purpose of this book is, in
+part, to help guide you through these differences, teaching you a set of
+patterns for effective async programming.</p>
+<p>Finally, it's worth remembering that traditional <em>synchronous</em> programming
+remains quite effective, outside of the highest-scale servers. In particular,
+Rust's advantages around memory footprint and predictability mean that you can
+get much farther with synchronous services than in many other languages. As with
+any other architectural choice, it's important to consider whether your
+application would be better served by using the simpler synchronous model.</p>
+<a class="header" href="async-in-rust/chapter.html#where-async-rust-is-today-and-where-its-headed" id="where-async-rust-is-today-and-where-its-headed"><h2>Where async Rust is today, and where it's headed</h2></a>
+<p><strong>Rust has a strong foundation for async programming</strong> with the <a href="https://github.com/alexcrichton/futures-rs/"><code>futures</code></a> and
+<a href="https://github.com/tokio-rs/tokio/"><code>tokio</code></a> crates, which cover the core abstractions for async, and primitives
+for async I/O, respectively. On top of these crates there's an ecosystem for
+interacting with various protocols and services, including HTTP, SSL, DNS,
+WebSockets, and more. This book covers much of this ecosystem, recommending
+production-quality libraries in each space.</p>
+<p>In addition, <strong>there is ongoing work to improve the ergonomics</strong> via
+<code>async</code>/<code>await</code> notation. This work is currently only available on nightly Rust,
+and is expected to provide more flexible borrowing support in the
+future. Nevertheless, if you're willing to work with nightly today, the library
+itself is stable and helpful. This book also covers its usage.</p>
+<p>As we'll see shortly, there are easy ways to &quot;bridge&quot; between async and sync
+code. In the long run, as async becomes a more first-class part of the language
+itself, the expectation is that core libraries will be written in an async
+fashion, but be easily consumed in either style. We'll see examples of that
+later in the book.</p>
+<a class="header" href="async-in-rust/chapter.html#who-this-book-is-for" id="who-this-book-is-for"><h2>Who this book is for</h2></a>
+<p>This book aims to be a comprehensive, up-to-date guide on the async story in
+Rust, appropriate for beginners and old hands alike:</p>
+<ul>
+<li>
+<p>The early chapters provide a gentle introduction to async programming in
+general, and to Rust's particular take on it.</p>
+</li>
+<li>
+<p>The middle chapters provide more powerful tools, best practices, and larger
+examples to help you work with async in a more serious way.</p>
+</li>
+<li>
+<p>The later chapters cover a cross section of the broader async ecosystem and
+the most advanced features of the core libraries, and more extensive case
+studies.</p>
+</li>
+</ul>
+<p><em>Let's dive in!</em></p>
+
+                </div>
+
+                <!-- Mobile navigation buttons -->
+                
+
+                
+                    <a rel="next" href="task-model/chapter.html" class="mobile-nav-chapters next">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+
+            </div>
+
+            
+
+            
+                <a href="task-model/chapter.html" class="nav-chapters next" title="You can navigate through the chapters using the arrow keys">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            
+
+        </div>
+
+
+        <!-- Local fallback for Font Awesome -->
+        <script>
+            if ($(".fa").css("font-family") !== "FontAwesome") {
+                $('<link rel="stylesheet" type="text/css" href="_FontAwesome/css/font-awesome.css">').prependTo('head');
+            }
+        </script>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        
+
+        
+
+        
+
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+    </body>
+</html>
